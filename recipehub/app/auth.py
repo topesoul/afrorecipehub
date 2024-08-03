@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from app.forms import RegistrationForm, LoginForm
 from app.models import User
 from app import mongo, bcrypt
 
@@ -8,41 +8,28 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        user = mongo.db.users.find_one({'email': email})
-
-        if user and check_password_hash(user['password'], password):
-            user_obj = User(user)
-            login_user(user_obj)
-            return redirect(url_for('main.profile'))
-        else:
-            flash('Login failed. Check your email and password.')
-
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = mongo.db.users.find_one({"username": form.username.data})
+        if user and bcrypt.check_password_hash(user['password'], form.password.data):
+            login_user(User(user))
+            return redirect(url_for('main.home'))
+        flash('Login unsuccessful. Please check username and password', 'danger')
+    return render_template('login.html', form=form)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        username = request.form.get('username')
-        password = request.form.get('password')
-        password_hash = generate_password_hash(password)
-
-        user = {
-            'email': email,
-            'username': username,
-            'password': password_hash
-        }
-
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = {"username": form.username.data, "password": hashed_password}
         mongo.db.users.insert_one(user)
+        flash('Your account has been created!', 'success')
         return redirect(url_for('auth.login'))
-
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('main.home'))
