@@ -4,22 +4,24 @@ from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
-if os.path.exists("env.py"):
-    import env
+mongo = PyMongo()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+def create_app():
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+    app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
-mongo = PyMongo(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'auth.login'
+    mongo.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
-from app.auth import auth as auth_blueprint
-from app.recipes import recipes as recipes_blueprint
-from app.routes import main as main_blueprint
+    from app.routes import main
+    from app.auth import auth
 
-app.register_blueprint(auth_blueprint)
-app.register_blueprint(recipes_blueprint)
-app.register_blueprint(main_blueprint)
+    app.register_blueprint(main)
+    app.register_blueprint(auth, url_prefix='/auth')
+
+    return app
