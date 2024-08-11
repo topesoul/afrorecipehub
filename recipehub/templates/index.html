@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <div id="hero-section">
+        <h1>Welcome to AfroRecipeHub</h1>
+    </div>
+    {% if current_user.is_authenticated %}
+    <!-- User Greeting Section -->
+        <div id="user-welcome" class="text-center">
+            <h1>Hello, {{ current_user.username }}!</h1>
+            <div>
+                <h4>Ready to share your newest African dish?</h4>
+                <p>Begin your culinary adventure now!</p>
+                <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-primary">Create a New Recipe</a>
+            </div>
+            <div class="mt-3">
+                <p>Explore the latest recipes from our community or check your own creations <a href="{{ url_for('main.dashboard', username=current_user.username) }}">here!</a></p>
+                <p>Need inspiration? Discover popular African dishes and find your next favorite recipe.</p>
+            </div>
+        </div>
+    {% else %}
+        <h1>Welcome to AfroRecipeHub</h1>
+        <!-- Introduction Section -->
+        <div id="intro-section" class="text-center">
+            <div>
+                <p>Looking for authentic African recipes for your next meal?</p>
+                <p>Or perhaps you have a unique creation to share with the world?</p>
+                <h4>Join AfroRecipeHub today!</h4>
+            </div>
+            <div>
+                <p>Create a free account to share your recipes <a href="{{ url_for('auth.register') }}">here!</a></p>
+                <p>Access our step-by-step guide for adding new recipes, available to all logged-in users.</p>
+                <p>Join us now and be part of the AfroRecipeHub community!</p>
+            </div>
+        </div>
+    {% endif %}
+    <!-- Divider with African cuisine image -->
+    <div id="image-divider">
+        <img src="{{ url_for('static', filename='images/african-cuisine.jpg') }}" alt="African Cuisine">
+    </div>
+    <!-- Information Section -->
+    <div id="info-section" class="text-center">
+        <div>
+            <h4>Discover African Cuisine</h4>
+            <p>
+                African cuisine offers a rich tapestry of flavors, ingredients, and cooking techniques. Each region has its own unique culinary traditions that reflect the diverse cultures of the continent.
+            </p>
+        </div>
+        <div>
+            <h4>Essential Tools for African Cooking</h4>
+            <p>
+                While traditional African cooking often uses specific tools like a mortar and pestle or clay pots, many recipes can be adapted to modern kitchen equipment. Having the right tools can enhance the authenticity and ease of preparation.
+            </p>
+        </div>
+        <div id="explore-recipes" class="text-center">
+            <h4>Excited to cook African dishes?</h4>
+            <p>Explore our recipes <a href="{{ url_for('recipes.get_recipes') }}">here!</a></p>
+        </div>
+    </div>
+{% endblock %}
