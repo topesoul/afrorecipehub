@@ -1,23 +1,40 @@
 {% extends "base.html" %}
-{% block title %}Edit Recipe{% endblock %}
 {% block content %}
+
 <h1>Edit Recipe</h1>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        {{ form.name.label }}
-        {{ form.name(class="form-control") }}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <form class="card bg-light p-3" method="POST" action="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="recipe_name">Recipe Name :</label>
+                    <input type="text" class="form-control" id="recipe_name" name="recipe_name" value="{{ recipe.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description :</label>
+                    <textarea class="form-control" id="description" rows="2" name="description" required>{{ recipe.description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category :</label>
+                    <select class="form-control" id="category" name="category">
+                        <option {% if recipe.category == "Jollof Rice" %}selected{% endif %}>Jollof Rice</option>
+                        <option {% if recipe.category == "Fried Rice" %}selected{% endif %}>Fried Rice</option>
+                        <option {% if recipe.category == "Egusi Soup" %}selected{% endif %}>Egusi Soup</option>
+                        <option {% if recipe.category == "Plantain" %}selected{% endif %}>Plantain</option>
+                        <option {% if recipe.category == "Puff-Puff" %}selected{% endif %}>Puff-Puff</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients :</label>
+                    <textarea class="form-control" id="ingredients" rows="3" name="ingredients" required>{{ recipe.ingredients }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Preparation Instructions :</label>
+                    <textarea class="form-control" id="instructions" rows="3" name="instructions" required>{{ recipe.instructions }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.ingredients.label }}
-        {{ form.ingredients(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.instructions.label }}
-        {{ form.instructions(class="form-control") }}
-    </div>
-    <div class="form-group">
-        {{ form.submit(class="btn btn-primary") }}
-    </div>
-</form>
+</div>
 {% endblock %}
