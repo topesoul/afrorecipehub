@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1>{{ recipe.name }}</h1>
+            <p class="lead">{{ recipe.description }}</p>
+            <hr>
+            <h3>Ingredients</h3>
+            <ul>
+                {% for ingredient in recipe.ingredients.split(',') %}
+                <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Instructions</h3>
+            <p>{{ recipe.instructions }}</p>
+            <div class="mt-4">
+                <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning">Edit Recipe</a>
+                <a href="{{ url_for('recipes.delete_recipe', recipe_id=recipe.id) }}" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe.id }}" data-item-type="recipe">Delete Recipe</a>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">WARNING</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete this recipe?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
