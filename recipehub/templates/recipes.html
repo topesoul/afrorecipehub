@@ -1,12 +1,92 @@
 {% extends "base.html" %}
-{% block title %}Recipes{% endblock %}
+
 {% block content %}
-<h1>Recipes</h1>
-<ul>
-    {% for recipe in recipes %}
-        <li>
-            <a href="{{ url_for('recipe', recipe_id=recipe._id) }}">{{ recipe.name }}</a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <!-- Header and Add New Recipe Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded shadow-sm header-section">
+        <h1>Recipes</h1>
+        <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-primary">Add New Recipe</a>
+    </div>
+    <!-- Filter and Search Section -->
+    <div class="row justify-content-center mb-4">
+        <!-- Filter by Category Dropdown -->
+        <div class="col-12 col-lg-3 col-md-4 mb-3 mb-md-0">
+            <div class="card p-3 shadow-sm border-0">
+                <h5 class="mb-2 d-none d-md-block">Filter by Category</h5>
+                <button class="btn btn-primary d-md-none mb-2 p-2" type="button" data-toggle="collapse" data-target="#filterDropdown" aria-expanded="false" aria-controls="filterDropdown">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <div class="collapse d-md-block w-100" id="filterDropdown">
+                    <form id="filterForm">
+                        <select class="form-control mb-2" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Search Bar -->
+        <div class="col-12 col-md-8">
+            <div class="card p-3 shadow-sm border-0">
+                <form>
+                    <div class="input-group">
+                        <input class="form-control" id="search" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- No Results Message -->
+    <div class="row">
+        <div class="col-12">
+            <h4 class="text-danger mt-5 text-center" id="not-found" style="display: none;">No Results! Please try a different phrase.</h4>
+        </div>
+    </div>
+    <!-- Recipes Listing -->
+    <div class="row" id="recipeList">
+        {% for recipe in recipes %}
+        <div class="col-lg-4 col-md-6 mb-4 recipe-item" data-category="{{ recipe.category }}">
+            <div class="card recipe-card shadow-sm border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="recipe-name text-dark">{{ recipe.name }}</a>
+                    </h5>
+                    <p class="card-text"><strong>Category:</strong> <span class="recipe-category">{{ recipe.category }}</span></p>
+                    <p class="card-text recipe-description">{{ recipe.description }}</p>
+                    <div class="mt-auto d-flex justify-content-between">
+                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="btn btn-light btn-sm">Read</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">WARNING</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete this <span id="item-type"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
