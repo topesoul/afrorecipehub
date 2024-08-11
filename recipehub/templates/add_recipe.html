@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Add a New Recipe</h1>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <form class="card bg-light" method="POST" action="{{ url_for('recipes.add_recipe') }}">
+                <div class="form-group">
+                    <label for="name">Recipe Name :</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Recipe Description :</label>
+                    <textarea class="form-control" id="description" rows="2" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category :</label>
+                    <select class="form-control" id="category" name="category">
+                        <option>Appetizer</option>
+                        <option>Main Course</option>
+                        <option>Dessert</option>
+                        <option>Side Dish</option>
+                        <option>Beverage</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients :</label>
+                    <textarea class="form-control" id="ingredients" rows="3" name="ingredients" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instructions :</label>
+                    <textarea class="form-control" id="instructions" rows="3" name="instructions" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
