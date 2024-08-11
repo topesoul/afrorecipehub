@@ -1,20 +1,27 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import InputRequired, Length, EqualTo
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=20)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=20)])
-    confirm_password = PasswordField('Confirm Password', validators=[InputRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=20)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=20)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class RecipeForm(FlaskForm):
-    name = StringField('Recipe Name', validators=[InputRequired(), Length(min=1, max=100)])
-    ingredients = TextAreaField('Ingredients', validators=[InputRequired()])
-    instructions = TextAreaField('Instructions', validators=[InputRequired()])
-    submit = SubmitField('Submit')
+    title = StringField('Title', validators=[DataRequired()])
+    ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
+    instructions = TextAreaField('Instructions', validators=[DataRequired()])
+    category = SelectField('Category', choices=[], validators=[DataRequired()])
+    submit = SubmitField('Save Recipe')
+
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Post Comment')
