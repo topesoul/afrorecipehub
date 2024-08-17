@@ -20,8 +20,8 @@
                     <form id="filterForm">
                         <select class="form-control mb-2" id="categoryFilter">
                             <option value="">All Categories</option>
-                            {% for category in categories %}
-                            <option value="{{ category }}">{{ category }}</option>
+                            {% for category_id, category_name in categories %}
+                            <option value="{{ category_id }}">{{ category_name }}</option>
                             {% endfor %}
                         </select>
                         <button class="btn btn-primary w-100" type="submit">Filter</button>
@@ -32,7 +32,7 @@
         <!-- Search Bar -->
         <div class="col-12 col-md-8">
             <div class="card p-3 shadow-sm border-0">
-                <form>
+                <form id="searchForm">
                     <div class="input-group">
                         <input class="form-control" id="search" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
@@ -52,16 +52,25 @@
     <!-- Recipes Listing -->
     <div class="row" id="recipeList">
         {% for recipe in recipes %}
-        <div class="col-lg-4 col-md-6 mb-4 recipe-item" data-category="{{ recipe.category }}">
+        <div class="col-lg-4 col-md-6 mb-4 recipe-item" data-category="{{ recipe.category_id }}">
             <div class="card recipe-card shadow-sm border-0">
+                {% if recipe.image_path %}
+                <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/recipe-placeholder.png') }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
-                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="recipe-name text-dark">{{ recipe.name }}</a>
+                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="recipe-name text-dark">{{ recipe.title }}</a>
                     </h5>
-                    <p class="card-text"><strong>Category:</strong> <span class="recipe-category">{{ recipe.category }}</span></p>
+                    <p class="card-text"><strong>Category:</strong> <span class="recipe-category">{{ recipe.category_name }}</span></p>
                     <p class="card-text recipe-description">{{ recipe.description }}</p>
                     <div class="mt-auto d-flex justify-content-between">
-                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="btn btn-light btn-sm">Read</a>
+                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="btn btn-light btn-sm">Read</a>
+                        {% if current_user.is_authenticated and current_user.get_id() == recipe.created_by|string %}
+                        <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
