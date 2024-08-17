@@ -57,7 +57,7 @@
                 {% if recipe.image_path %}
                 <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top" alt="{{ recipe.title }}">
                 {% else %}
-                <img src="{{ url_for('static', filename='images/recipe-placeholder.png') }}" class="card-img-top" alt="{{ recipe.title }}">
+                <img src="{{ url_for('static', filename='images/default_recipe_image.jpg') }}" class="card-img-top" alt="{{ recipe.title }}">
                 {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
