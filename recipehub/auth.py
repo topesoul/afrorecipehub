@@ -29,8 +29,16 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = LoginForm()
+    
+    # Debugging statement
+    print("Form Submitted: ", form.validate_on_submit())
+    
     if form.validate_on_submit():
         user = mongo.db.users.find_one({"username": form.username.data})
+        
+        # Debugging statement
+        print("User Found: ", user)
+        
         if user and bcrypt.check_password_hash(user["password"], form.password.data):
             user_obj = User(str(user["_id"]), user["username"])
             login_user(user_obj, remember=form.remember.data)
