@@ -5,32 +5,31 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-md-12">
-            <form class="card bg-light" method="POST" action="{{ url_for('recipes.add_recipe') }}">
+            <form class="card bg-light" method="POST" enctype="multipart/form-data" action="{{ url_for('recipes.add_recipe') }}">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="name">Recipe Name :</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <label for="title">Recipe Name :</label>
+                    {{ form.title(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="description">Recipe Description :</label>
-                    <textarea class="form-control" id="description" rows="2" name="description" required></textarea>
+                    {{ form.description(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="category">Category :</label>
-                    <select class="form-control" id="category" name="category">
-                        <option>Appetizer</option>
-                        <option>Main Course</option>
-                        <option>Dessert</option>
-                        <option>Side Dish</option>
-                        <option>Beverage</option>
-                    </select>
+                    {{ form.category(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="ingredients">Ingredients :</label>
-                    <textarea class="form-control" id="ingredients" rows="3" name="ingredients" required></textarea>
+                    {{ form.ingredients(class="form-control") }}
                 </div>
                 <div class="form-group">
                     <label for="instructions">Instructions :</label>
-                    <textarea class="form-control" id="instructions" rows="3" name="instructions" required></textarea>
+                    {{ form.instructions(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="image">Upload Image:</label>
+                    <input type="file" class="form-control" name="image">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
