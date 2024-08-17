@@ -39,7 +39,7 @@
                         {% for recipe in recipes %}
                             <div class="col-lg-6 mb-4">
                                 <div class="card shadow-sm border-0">
-                                    <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/recipe-placeholder.png') }}" class="card-img-top" alt="recipe image">
+                                    <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/default_recipe_image.jpg') }}" class="card-img-top" alt="recipe image">
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id) }}" class="recipe-name">{{ recipe.title }}</a>
