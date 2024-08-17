@@ -4,7 +4,10 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h1>{{ recipe.name }}</h1>
+            {% if recipe.image_path %}
+            <img src="{{ url_for('static', filename=recipe.image_path) }}" class="img-fluid rounded mb-4" alt="{{ recipe.title }}">
+            {% endif %}
+            <h1>{{ recipe.title }}</h1>
             <p class="lead">{{ recipe.description }}</p>
             <hr>
             <h3>Ingredients</h3>
@@ -16,8 +19,8 @@
             <h3>Instructions</h3>
             <p>{{ recipe.instructions }}</p>
             <div class="mt-4">
-                <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-warning">Edit Recipe</a>
-                <a href="{{ url_for('recipes.delete_recipe', recipe_id=recipe.id) }}" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe.id }}" data-item-type="recipe">Delete Recipe</a>
+                <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning">Edit Recipe</a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete Recipe</button>
             </div>
         </div>
     </div>
