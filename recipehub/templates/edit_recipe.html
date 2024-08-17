@@ -5,10 +5,11 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-md-12">
-            <form class="card bg-light p-3" method="POST" action="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" enctype="multipart/form-data">
+            <form class="card bg-light p-3" method="POST" action="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
                     <label for="recipe_name">Recipe Name :</label>
-                    <input type="text" class="form-control" id="recipe_name" name="recipe_name" value="{{ recipe.name }}" required>
+                    <input type="text" class="form-control" id="recipe_name" name="title" value="{{ recipe.title }}" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description :</label>
@@ -17,11 +18,9 @@
                 <div class="form-group">
                     <label for="category">Category :</label>
                     <select class="form-control" id="category" name="category">
-                        <option {% if recipe.category == "Jollof Rice" %}selected{% endif %}>Jollof Rice</option>
-                        <option {% if recipe.category == "Fried Rice" %}selected{% endif %}>Fried Rice</option>
-                        <option {% if recipe.category == "Egusi Soup" %}selected{% endif %}>Egusi Soup</option>
-                        <option {% if recipe.category == "Plantain" %}selected{% endif %}>Plantain</option>
-                        <option {% if recipe.category == "Puff-Puff" %}selected{% endif %}>Puff-Puff</option>
+                        {% for category_id, category_name in form.category.choices %}
+                        <option value="{{ category_id }}" {% if recipe.category_id == category_id %}selected{% endif %}>{{ category_name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
@@ -31,6 +30,10 @@
                 <div class="form-group">
                     <label for="instructions">Preparation Instructions :</label>
                     <textarea class="form-control" id="instructions" rows="3" name="instructions" required>{{ recipe.instructions }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Upload Image (optional):</label>
+                    <input type="file" class="form-control" id="image" name="image">
                 </div>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
