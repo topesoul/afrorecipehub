@@ -5,6 +5,27 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Background styling for login and register pages */
+.auth-page {
+    background-image: url('{{ url_for('static', filename='images/hero-bg.jpg') }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background-color: rgba(255, 255, 255, 0.85); /* White background with some transparency */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
 header {
     background-color: #333;
     color: #fff;
@@ -59,22 +80,26 @@ button:hover {
     background-color: #555;
 }
 
-.card {
+/* Recipe Card Styling */
+.recipe-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    border-radius: 5px; /* Ensure the card itself has rounded corners */
+    overflow: hidden; /* Ensure content within the card, like images, doesn't overflow */
 }
 
-.card:hover {
+.recipe-card:hover {
     transform: translateY(-5px);
 }
 
-.card img {
+.recipe-card img {
     object-fit: cover;
     width: 100%;
-    height: 200px;
+    height: 200px; /* Set a fixed height for the images to keep cards uniform */
+    border-radius: 5px 5px 0 0; /* Only round the top corners of the image */
 }
 
-.card-body h5 {
+.recipe-card .card-body h5 {
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
 }
@@ -118,6 +143,21 @@ button:hover {
     background-position: center;
     padding: 100px 0;
     color: white;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better visibility */
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.65); /* Increased opacity for better contrast */
+    padding: 50px;
+    border-radius: 10px;
+    display: inline-block;
+    width: 100%; /* Make the overlay cover the full width of the container */
+}
+
+#hero-section h1, #hero-section p {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ensure the text shadow applies to all text */
 }
 
 /* Info Section */
