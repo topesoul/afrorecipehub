@@ -32,7 +32,7 @@ def add_recipe():
         image_file = request.files['image']
         if image_file and image_file.filename != '':
             filename = secure_filename(image_file.filename)
-            upload_folder = 'static/uploads'
+            upload_folder = os.path.join('recipehub', 'static', 'uploads', 'recipes')
             image_path = os.path.join(upload_folder, filename)
             
             # Create directory if it doesn't exist
@@ -42,11 +42,13 @@ def add_recipe():
             # Save the image file
             try:
                 image_file.save(image_path)
+                # Convert to relative path for serving
+                image_path = os.path.join('uploads', 'recipes', filename)
             except Exception as e:
                 flash(f"Error saving image: {e}", 'danger')
                 return render_template('add_recipe.html', form=form)
         else:
-            image_path = None  # or a default image path
+            image_path = 'uploads/default_recipe_image.jpg'  # Assign default image
         
         recipe = {
             "title": form.title.data,
@@ -95,7 +97,7 @@ def edit_recipe(recipe_id):
         image_file = request.files['image']
         if image_file and image_file.filename != '':
             filename = secure_filename(image_file.filename)
-            upload_folder = 'static/uploads'
+            upload_folder = os.path.join('recipehub', 'static', 'uploads', 'recipes')
             image_path = os.path.join(upload_folder, filename)
             
             # Create directory if it doesn't exist
@@ -105,7 +107,7 @@ def edit_recipe(recipe_id):
             # Save the image file
             try:
                 image_file.save(image_path)
-                update_data["image_path"] = image_path
+                update_data["image_path"] = os.path.join('uploads', 'recipes', filename)
             except Exception as e:
                 flash(f"Error saving image: {e}", 'danger')
                 return render_template('edit_recipe.html', form=form, recipe=recipe)
