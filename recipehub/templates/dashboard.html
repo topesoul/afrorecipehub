@@ -4,44 +4,47 @@
 <div class="container mt-5">
     <!-- Account Management Sidebar -->
     <div class="row">
-        <div class="col-lg-3 offset-lg-0 col-md-8 offset-md-2 mb-4">
-            <div class="card bg-dark">
-                <div class="card-header border-bottom text-center">
-                    <h4>Account Management</h4>
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Account Management</h4>
                 </div>
-                <img src="{{ url_for('static', filename='images/user-icon.png') }}" class="card-img-top border-bottom" alt="user icon">
-                <div class="card-body">
-                    <h5 class="text-center">{{ current_user.username }}</h5>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'images/user-image.jpg') }}" class="rounded-circle mb-3" alt="user icon" style="width: 120px; height: 120px;">
+                    <h5 class="card-title">{{ current_user.username }}</h5>
+                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            <input type="file" name="profile_image" class="form-control-file mb-3">
+                            <button type="submit" class="btn btn-primary btn-block">Update Profile Image</button>
+                        </div>
+                    </form>
                     <a href="{{ url_for('auth.change_username', username=current_user.username) }}" class="btn btn-warning btn-block mb-2">Change Username</a>
                     <a href="{{ url_for('auth.delete_account', username=current_user.username) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ current_user.username }}" data-item-type="account">Delete Account</a>
                 </div>
             </div>
         </div>
         <!-- Main Content Area -->
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1>Welcome, {{ current_user.username }}</h1>
+                <h1 class="mb-4">Welcome, {{ current_user.username }}</h1>
                 <div>
-                    <a href="{{ url_for('recipes.new_recipe') }}" class="btn btn-secondary">Add New Recipe</a>
+                    <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-success">Add New Recipe</a>
                 </div>
             </div>
             <div class="manage-recipes">
                 <h4>Your Recipes:</h4>
-                {% if not recipes %}
-                    <div class="text-center w-100">
-                        <p>No recipes found. Start by adding a new recipe!</p>
-                    </div>
-                {% else %}
+                {% if recipes %}
                     <div class="row">
                         {% for recipe in recipes %}
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card">
-                                    <img src="{{ url_for('static', filename='images/recipe-placeholder.png') }}" class="card-img-top" alt="recipe image">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow-sm border-0">
+                                    <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/recipe-placeholder.png') }}" class="card-img-top" alt="recipe image">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id) }}" class="recipe-name">{{ recipe.name }}</a>
+                                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id) }}" class="recipe-name">{{ recipe.title }}</a>
                                         </h5>
-                                        <p class="card-text"><strong>Category:</strong> {{ recipe.category }}</p>
+                                        <p class="card-text"><strong>Category:</strong> {{ recipe.category_name }}</p>
                                         <p class="card-text">{{ recipe.description }}</p>
                                         <div class="d-flex justify-content-between">
                                             <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -51,6 +54,10 @@
                                 </div>
                             </div>
                         {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center w-100">
+                        <p class="text-muted">No recipes found. Start by adding a new recipe!</p>
                     </div>
                 {% endif %}
             </div>
@@ -78,5 +85,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
