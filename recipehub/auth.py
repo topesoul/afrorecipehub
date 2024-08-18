@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.utils import secure_filename
 from recipehub.forms import RegistrationForm, LoginForm, ChangeUsernameForm
@@ -61,6 +61,11 @@ def change_username(username):
     form = ChangeUsernameForm(username=current_user.username)
     if form.validate_on_submit():
         new_username = form.username.data
+        # Check if the new username is the same as the current one
+        if new_username == current_user.username:
+            flash('This is already your username. Please choose a different one.', 'warning')
+            return redirect(url_for('auth.change_username', username=current_user.username))
+        
         # Check if the new username is already taken
         existing_user = mongo.db.users.find_one({"username": new_username})
         if existing_user:
@@ -84,13 +89,14 @@ def update_profile():
 
     if profile_image and profile_image.filename:
         filename = secure_filename(profile_image.filename)
-        image_path = os.path.join('static/uploads', filename)
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'profile_images')
+        image_path = os.path.join(upload_folder, filename)
         
-        if not os.path.exists('static/uploads'):
-            os.makedirs('static/uploads')
+        if not os.path.exists(upload_folder):
+            os.makedirs(upload_folder)
         
         profile_image.save(image_path)
-        update_data['profile_image'] = image_path
+        update_data['profile_image'] = os.path.join('uploads', 'profile_images', filename)
 
     if update_data:
         mongo.db.users.update_one(
