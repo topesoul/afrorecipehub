@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Change Username{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1>Change Username</h1>
+            <form method="POST" action="{{ url_for('auth.change_username', username=current_user.username) }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="username">New Username :</label>
+                    {{ form.username(class="form-control", id="username", value=current_user.username) }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Change Username</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
