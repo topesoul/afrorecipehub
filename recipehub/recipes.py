@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from recipehub.forms import RecipeForm, CommentForm
@@ -8,6 +8,8 @@ from bson.objectid import ObjectId
 from datetime import datetime
 
 recipes_bp = Blueprint('recipes', __name__)
+
+DEFAULT_IMAGE_PATH = 'images/default_recipe_image.jpg'
 
 @recipes_bp.route('/get_recipes')
 def get_recipes():
@@ -32,7 +34,7 @@ def add_recipe():
         image_file = request.files['image']
         if image_file and image_file.filename != '':
             filename = secure_filename(image_file.filename)
-            upload_folder = os.path.join('recipehub', 'static', 'uploads', 'recipes')
+            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'recipes')
             image_path = os.path.join(upload_folder, filename)
             
             # Create directory if it doesn't exist
@@ -48,12 +50,12 @@ def add_recipe():
                 flash(f"Error saving image: {e}", 'danger')
                 return render_template('add_recipe.html', form=form)
         else:
-            image_path = 'uploads/default_recipe_image.jpg'  # Assign default image
+            image_path = DEFAULT_IMAGE_PATH  # Use default image if none is uploaded
         
         recipe = {
             "title": form.title.data,
             "description": form.description.data,
-            "ingredients": form.ingredients.data,
+            "ingredients": form.ingredients.data.splitlines(),
             "instructions": form.instructions.data,
             "category_id": ObjectId(form.category.data),
             "created_by": ObjectId(current_user.get_id()),
@@ -87,30 +89,26 @@ def edit_recipe(recipe_id):
         update_data = {
             "title": form.title.data,
             "description": form.description.data,
-            "ingredients": form.ingredients.data,
+            "ingredients": form.ingredients.data.splitlines(),
             "instructions": form.instructions.data,
             "category_id": ObjectId(form.category.data),
             "updated_at": datetime.utcnow()
         }
         
-        # Handle image upload
-        image_file = request.files['image']
-        if image_file and image_file.filename != '':
+        # Handle image upload or removal
+        if form.remove_image.data:
+            update_data["image_path"] = DEFAULT_IMAGE_PATH
+        elif request.files['image'].filename != '':
+            image_file = request.files['image']
             filename = secure_filename(image_file.filename)
-            upload_folder = os.path.join('recipehub', 'static', 'uploads', 'recipes')
+            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'recipes')
             image_path = os.path.join(upload_folder, filename)
             
-            # Create directory if it doesn't exist
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
             
-            # Save the image file
-            try:
-                image_file.save(image_path)
-                update_data["image_path"] = os.path.join('uploads', 'recipes', filename)
-            except Exception as e:
-                flash(f"Error saving image: {e}", 'danger')
-                return render_template('edit_recipe.html', form=form, recipe=recipe)
+            image_file.save(image_path)
+            update_data["image_path"] = os.path.join('uploads', 'recipes', filename)
         
         mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": update_data})
         flash('Recipe updated!', 'success')
@@ -123,6 +121,11 @@ def edit_recipe(recipe_id):
 def delete_recipe(recipe_id):
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     if recipe and (recipe['created_by'] == ObjectId(current_user.get_id()) or session.get('is_admin')):
+        if recipe["image_path"] != DEFAULT_IMAGE_PATH:
+            try:
+                os.remove(os.path.join(current_app.root_path, 'static', recipe["image_path"]))
+            except Exception as e:
+                flash(f"Error removing old image: {e}", 'danger')
         mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
         flash('Recipe deleted!', 'success')
     else:
