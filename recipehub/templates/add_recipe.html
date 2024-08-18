@@ -1,39 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Add a New Recipe</h1>
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-12">
-            <form class="card bg-light" method="POST" enctype="multipart/form-data" action="{{ url_for('recipes.add_recipe') }}">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Add a New Recipe</h1>
+            <form class="card p-4 shadow-sm bg-light" method="POST" enctype="multipart/form-data" action="{{ url_for('recipes.add_recipe') }}">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="title">Recipe Name :</label>
-                    {{ form.title(class="form-control") }}
+                    <label for="title">Recipe Name:</label>
+                    {{ form.title(class="form-control", placeholder="Enter the name of your recipe") }}
                 </div>
                 <div class="form-group">
-                    <label for="description">Recipe Description :</label>
-                    {{ form.description(class="form-control") }}
+                    <label for="description">Recipe Description:</label>
+                    {{ form.description(class="form-control", placeholder="Give a brief description of your recipe") }}
                 </div>
                 <div class="form-group">
-                    <label for="category">Category :</label>
+                    <label for="category">Category:</label>
                     {{ form.category(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    <label for="ingredients">Ingredients :</label>
-                    {{ form.ingredients(class="form-control") }}
+                    <label for="ingredients">Ingredients:</label>
+                    {{ form.ingredients(class="form-control", placeholder="List the ingredients required, one per line") }}
                 </div>
                 <div class="form-group">
-                    <label for="instructions">Instructions :</label>
-                    {{ form.instructions(class="form-control") }}
+                    <label for="instructions">Instructions:</label>
+                    {{ form.instructions(class="form-control", placeholder="Describe the steps to prepare the recipe") }}
                 </div>
                 <div class="form-group">
                     <label for="image">Upload Image:</label>
                     <input type="file" class="form-control" name="image">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mt-3">Submit Recipe</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
 {% endblock %}
