@@ -12,7 +12,7 @@
             <hr>
             <h3>Ingredients</h3>
             <ul>
-                {% for ingredient in recipe.ingredients.split(',') %}
+                {% for ingredient in recipe.ingredients %}
                 <li>{{ ingredient }}</li>
                 {% endfor %}
             </ul>
