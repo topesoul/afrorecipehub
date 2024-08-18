@@ -1,33 +1,33 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
 }
 
 /* Background styling for login and register pages */
 .auth-page {
-    background-image: url('{{ url_for('static', filename='images/hero-bg.jpg') }}');
+    background-image: url('/static/images/home-page-background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .auth-card {
-    background-color: rgba(255, 255, 255, 0.85); /* White background with some transparency */
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
 }
 
 header {
-    background-color: #333;
+    background-color: #0056b3;
     color: #fff;
     padding: 1rem 0;
     text-align: center;
@@ -37,6 +37,11 @@ nav a {
     color: #fff;
     margin: 0 1rem;
     text-decoration: none;
+}
+
+.nav-item .nav-link.active {
+    font-weight: bold;
+    color: #ffcc00 !important;
 }
 
 main {
@@ -50,8 +55,8 @@ h1, h4 {
 form {
     background-color: #fff;
     padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -68,24 +73,26 @@ input, textarea, select {
 }
 
 button {
-    background-color: #333;
+    background-color: #0056b3;
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #555;
+    background-color: #004494;
 }
 
 /* Recipe Card Styling */
 .recipe-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    border-radius: 5px; /* Ensure the card itself has rounded corners */
-    overflow: hidden; /* Ensure content within the card, like images, doesn't overflow */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
 }
 
 .recipe-card:hover {
@@ -95,90 +102,67 @@ button:hover {
 .recipe-card img {
     object-fit: cover;
     width: 100%;
-    height: 200px; /* Set a fixed height for the images to keep cards uniform */
-    border-radius: 5px 5px 0 0; /* Only round the top corners of the image */
+    height: 250px;
+    border-radius: 10px 10px 0 0;
 }
 
 .recipe-card .card-body h5 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     margin-bottom: 0.75rem;
-}
-
-.rounded-circle {
-    border-radius: 50%;
-    max-width: 150px;
-    margin: 0 auto;
-    display: block;
-}
-
-.manage-recipes .card-title a {
     color: #333;
-    text-decoration: none;
 }
 
-.manage-recipes .card-title a:hover {
-    text-decoration: underline;
+.recipe-card .card-body p {
+    color: #666;
 }
 
-.manage-recipes .card-text {
-    margin-bottom: 0.5rem;
+.recipe-card .card-body .btn {
+    border-radius: 5px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
 }
 
-.modal-content {
-    border-radius: 10px;
-}
-
-.modal-header {
-    border-bottom: none;
-}
-
-.modal-footer {
-    border-top: none;
+/* Footer Styling */
+footer {
+    background-color: #f4f4f4;
+    padding: 2rem 0;
+    text-align: center;
+    color: #666;
+    margin-top: 4rem;
+    border-top: 1px solid #ddd;
 }
 
 /* Hero Section */
 #hero-section {
-    background-image: url('{{ url_for('static', filename='images/hero-bg.jpg') }}');
+    background-image: url('/static/images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     padding: 100px 0;
     color: white;
     position: relative;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better visibility */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-overlay {
-    background-color: rgba(0, 0, 0, 0.65); /* Increased opacity for better contrast */
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 50px;
     border-radius: 10px;
     display: inline-block;
-    width: 100%; /* Make the overlay cover the full width of the container */
+    width: 100%;
 }
 
 #hero-section h1, #hero-section p {
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ensure the text shadow applies to all text */
-}
-
-/* Info Section */
-#info-section i {
-    color: #007bff;
-}
-
-/* Image Divider */
-#image-divider img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* General Styling */
 .btn-outline-primary {
-    border-color: #007bff;
-    color: #007bff;
+    border-color: #0056b3;
+    color: #0056b3;
 }
 
 .btn-outline-primary:hover {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
 }
