@@ -98,7 +98,7 @@ def edit_recipe(recipe_id):
         # Handle image upload or removal
         if form.remove_image.data:
             update_data["image_path"] = DEFAULT_IMAGE_PATH
-        elif request.files['image'].filename != '':
+        elif request.files['image'] and request.files['image'].filename != '':
             image_file = request.files['image']
             filename = secure_filename(image_file.filename)
             upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'recipes')
