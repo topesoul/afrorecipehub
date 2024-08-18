@@ -58,14 +58,20 @@ def change_username(username):
         flash('You cannot change another user\'s username!', 'danger')
         return redirect(url_for('main.index'))
     
-    form = ChangeUsernameForm()
+    form = ChangeUsernameForm(username=current_user.username)
     if form.validate_on_submit():
-        mongo.db.users.update_one(
-            {"_id": ObjectId(current_user.get_id())},
-            {"$set": {"username": form.username.data}}
-        )
-        flash('Your username has been updated!', 'success')
-        return redirect(url_for('main.dashboard', username=form.username.data))
+        new_username = form.username.data
+        # Check if the new username is already taken
+        existing_user = mongo.db.users.find_one({"username": new_username})
+        if existing_user:
+            flash('That username is taken. Please choose a different one.', 'danger')
+        else:
+            mongo.db.users.update_one(
+                {"_id": ObjectId(current_user.get_id())},
+                {"$set": {"username": new_username}}
+            )
+            flash('Your username has been updated!', 'success')
+            return redirect(url_for('main.dashboard', username=new_username))
     
     return render_template('change_username.html', form=form)
 
@@ -76,7 +82,7 @@ def update_profile():
 
     update_data = {}
 
-    if profile_image:
+    if profile_image and profile_image.filename:
         filename = secure_filename(profile_image.filename)
         image_path = os.path.join('static/uploads', filename)
         
@@ -86,13 +92,16 @@ def update_profile():
         profile_image.save(image_path)
         update_data['profile_image'] = image_path
 
-    mongo.db.users.update_one(
-        {"_id": ObjectId(current_user.get_id())},
-        {"$set": update_data}
-    )
-    
-    flash('Profile updated successfully', 'success')
-    return redirect(url_for('main.dashboard'))
+    if update_data:
+        mongo.db.users.update_one(
+            {"_id": ObjectId(current_user.get_id())},
+            {"$set": update_data}
+        )
+        flash('Profile updated successfully', 'success')
+    else:
+        flash('No changes made to the profile.', 'warning')
+
+    return redirect(url_for('main.dashboard', username=current_user.username))
 
 @auth_bp.route('/delete_account/<username>', methods=['POST'])
 @login_required
