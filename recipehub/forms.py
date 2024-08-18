@@ -47,8 +47,8 @@ class RecipeForm(FlaskForm):
     instructions = TextAreaField('Instructions', validators=[DataRequired()])
     category = SelectField('Category', choices=[], validators=[DataRequired()])
     image = FileField('Upload Image')
-    submit = SubmitField('Add Recipe')
-
+    remove_image = BooleanField('Remove Existing Image')
+    submit = SubmitField('Save Recipe')
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=2, max=300)])
     submit = SubmitField('Add Comment')
