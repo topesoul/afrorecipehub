@@ -1,48 +1,123 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            {% if recipe.image_path %}
-            <img src="{{ url_for('static', filename=recipe.image_path) }}" class="img-fluid rounded mb-4" alt="{{ recipe.title }}">
-            {% endif %}
-            <h1>{{ recipe.title }}</h1>
-            <p class="lead">{{ recipe.description }}</p>
-            <hr>
-            <h3>Ingredients</h3>
-            <ul>
-                {% for ingredient in recipe.ingredients %}
-                <li>{{ ingredient }}</li>
-                {% endfor %}
-            </ul>
-            <h3>Instructions</h3>
-            <p>{{ recipe.instructions }}</p>
-            <div class="mt-4">
-                <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning">Edit Recipe</a>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete Recipe</button>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      {% if recipe.image_path %}
+      <img
+        src="{{ url_for('static', filename=recipe.image_path) }}"
+        class="img-fluid rounded mb-4 view-recipe-image"
+        alt="{{ recipe.title }}"
+      />
+      {% endif %}
+      <h1>{{ recipe.title }}</h1>
+      <p class="lead">{{ recipe.description }}</p>
+      <hr />
+      <h3>Ingredients</h3>
+      <ul>
+        {% for ingredient in recipe.ingredients %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+      </ul>
+      <h3>Instructions</h3>
+      <p>{{ recipe.instructions }}</p>
+      <div class="mt-4">
+        {% if current_user.is_authenticated and (current_user.get_id() ==
+        recipe.created_by|string or session.get('is_admin')) %}
+        <a
+          href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}"
+          class="btn btn-warning"
+          >Edit Recipe</a
+        >
+        <button
+          class="btn btn-danger"
+          data-toggle="modal"
+          data-target="#delete-modal"
+          data-item-id="{{ recipe._id|string }}"
+          data-item-type="recipe"
+        >
+          Delete Recipe
+        </button>
+        {% endif %} {% if current_user.is_authenticated %}
+        <form
+          method="POST"
+          action="{{ url_for('recipes.toggle_bookmark', recipe_id=recipe._id|string) }}"
+          class="d-inline-block"
+        >
+          {{ bookmark_form.csrf_token }} {% if is_bookmarked %}
+          <button type="submit" class="btn btn-outline-danger">
+            <i class="fas fa-bookmark"></i> Unbookmark
+          </button>
+          {% else %}
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="fas fa-bookmark"></i> Bookmark
+          </button>
+          {% endif %}
+        </form>
+        {% endif %}
+      </div>
+      <hr />
+      <h3>Comments</h3>
+      {% for comment in comments %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <p>{{ comment.comment }}</p>
+          <small class="text-muted"
+            >Posted by {{ comment.username }} on {{
+            comment.created_at.strftime('%Y-%m-%d') }}</small
+          >
         </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">WARNING</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you wish to delete this recipe?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
-                </div>
-            </div>
+      </div>
+      {% endfor %} {% if current_user.is_authenticated %}
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.comment.label(class="form-label") }} {{
+          form.comment(class="form-control") }}
         </div>
+        {{ form.submit(class="btn btn-primary") }}
+      </form>
+      {% else %}
+      <p>
+        Please <a href="{{ url_for('auth.login') }}">log in</a> to leave a
+        comment.
+      </p>
+      {% endif %}
     </div>
+  </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="delete-modal"
+    tabindex="-1"
+    aria-labelledby="delete-modal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">WARNING</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you wish to delete this recipe?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-danger" id="confirm-delete-btn">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
