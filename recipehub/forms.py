@@ -49,6 +49,10 @@ class RecipeForm(FlaskForm):
     image = FileField('Upload Image')
     remove_image = BooleanField('Remove Existing Image')
     submit = SubmitField('Save Recipe')
+
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=2, max=300)])
     submit = SubmitField('Add Comment')
+
+class BookmarkForm(FlaskForm):
+    submit = SubmitField('Bookmark')
