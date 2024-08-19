@@ -1,10 +1,17 @@
 {% extends "base.html" %}
+
 {% block content %}
 <div class="container mt-5">
     <!-- Header and Add New Recipe Button -->
     <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded shadow-sm header-section bg-white">
         <h1 class="text-dark">Explore Our Delicious Recipes</h1>
         <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-primary btn-lg">Add New Recipe</a>
+    </div>
+
+    <!-- Site Statistics -->
+    <div class="text-center mb-4">
+        <p>We currently have <strong>{{ recipes|length }}</strong> delicious recipes available!</p>
+        <p>Our community is growing with <strong>{{ unique_visitors }}</strong> unique visitors!</p>
     </div>
 
     <!-- Filter and Search Section -->
@@ -40,12 +47,16 @@
     <!-- Recipes Listing -->
     <div class="row" id="recipeList">
         {% for recipe in recipes %}
-        <div class="col-lg-4 col-md-6 mb-4 recipe-item" data-category="{{ recipe.category_id }}">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4 recipe-item" data-category="{{ recipe.category_id }}">
             <div class="card recipe-card shadow-lg border-0">
                 {% if recipe.image_path %}
-                <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top img-fluid rounded-top" alt="{{ recipe.title }}">
+                <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
+                    <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top img-fluid rounded-top" alt="{{ recipe.title }}">
+                </a>
                 {% else %}
-                <img src="{{ url_for('static', filename='images/default_recipe_image.jpg') }}" class="card-img-top img-fluid rounded-top" alt="{{ recipe.title }}">
+                <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
+                    <img src="{{ url_for('static', filename='images/default_recipe_image.jpg') }}" class="card-img-top img-fluid rounded-top" alt="{{ recipe.title }}">
+                </a>
                 {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
@@ -53,17 +64,62 @@
                     </h5>
                     <p class="card-text"><strong>Category:</strong> <span class="recipe-category">{{ recipe.category_name }}</span></p>
                     <p class="card-text recipe-description">{{ recipe.description }}</p>
-                    <div class="mt-auto d-flex justify-content-between">
-                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="btn btn-outline-primary btn-sm">Read</a>
-                        {% if current_user.is_authenticated and current_user.get_id() == recipe.created_by|string %}
-                        <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-outline-warning btn-sm">Edit</a>
-                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete</button>
-                        {% endif %}
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">
+                                <i class="fas fa-comments"></i> {{ recipe.comment_count }} Comments
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="share-icons">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('recipes.view_recipe', recipe_id=recipe._id|string, _external=True) }}" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://twitter.com/intent/tweet?url={{ url_for('recipes.view_recipe', recipe_id=recipe._id|string, _external=True) }}&text={{ recipe.title }}" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="https://wa.me/?text={{ url_for('recipes.view_recipe', recipe_id=recipe._id|string, _external=True) }}" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="btn btn-primary btn-block">View Recipe</a>
+                        </div>
                     </div>
                 </div>
+                {% if current_user.is_authenticated %}
+                <div class="card-footer d-flex justify-content-between">
+                    <div>
+                        <form method="POST" action="{{ url_for('recipes.toggle_bookmark', recipe_id=recipe._id|string) }}" class="d-inline-block">
+                            {{ form.hidden_tag() }}
+                            {% if recipe.is_bookmarked %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-bookmark"></i> Unbookmark
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-bookmark"></i> Bookmark
+                                </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    {% if current_user.get_id() == recipe.created_by|string or session.get('is_admin') %}
+                    <div>
+                        <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete</button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
+    </div>    
+        <!-- No results found message -->
+        <div class="col-12 text-center" id="not-found" style="display: none;">
+            <p class="text-muted">No recipes found matching your search criteria.</p>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -77,7 +133,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you wish to delete this <span id="item-type"></span>?</p>
+                    <p>Are you sure you wish to delete this recipe?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
