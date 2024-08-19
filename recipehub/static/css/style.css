@@ -20,8 +20,8 @@ body {
 .auth-card {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 400px;
 }
@@ -55,44 +55,68 @@ h1, h4 {
 form {
     background-color: #fff;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 label {
     display: block;
     margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
 }
 
 input, textarea, select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
 }
 
 button {
     background-color: #0056b3;
     color: #fff;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
+    width: 100%;
 }
 
 button:hover {
     background-color: #004494;
 }
 
+a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #004494;
+    text-decoration: underline;
+}
+
 /* Recipe Card Styling */
 .recipe-card {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     background-color: #fff;
+    margin-bottom: 20px;
 }
 
 .recipe-card:hover {
@@ -103,7 +127,7 @@ button:hover {
     object-fit: cover;
     width: 100%;
     height: 250px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .recipe-card .card-body h5 {
@@ -117,9 +141,9 @@ button:hover {
 }
 
 .recipe-card .card-body .btn {
-    border-radius: 5px;
+    border-radius: 25px;
     font-size: 0.875rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.5rem;
 }
 
 /* Footer Styling */
@@ -134,7 +158,7 @@ footer {
 
 /* Hero Section */
 #hero-section {
-    background-image: url('/static/images/hero-bg.jpg');
+    background-image: url('/static/images/new-hero-bg.jpg.jpg');
     background-size: cover;
     background-position: center;
     padding: 100px 0;
@@ -156,13 +180,116 @@ footer {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* General Styling */
-.btn-outline-primary {
-    border-color: #0056b3;
+/* General Button Styling */
+button {
+    background-color: #0056b3;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    width: auto;
+}
+
+button:hover {
+    background-color: #004494;
+}
+
+.btn-outline-primary, .btn-outline-danger {
+    border-width: 2px;
+}
+
+.btn-outline-primary:hover, .btn-outline-danger:hover {
+    background-color: #f8f9fa;
     color: #0056b3;
 }
 
-.btn-outline-primary:hover {
-    background-color: #0056b3;
+.btn-warning, .btn-danger {
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.btn-warning {
+    background-color: #ffcc00;
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #e6b800;
+    color: #000;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Modal Button Styling */
+.modal-footer .btn {
+    border-radius: 5px;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    width: auto;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.modal-footer .btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Adjust edit and delete buttons to match in shape and size */
+.btn-warning, .btn-danger {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: auto;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    color: #000;
+}
+
+.btn-danger {
+    background-color: #dc3545;
     color: white;
 }
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Add space between buttons */
+.btn-group .btn {
+    margin-right: 10px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0; /* No margin on the last button */
+}
+
