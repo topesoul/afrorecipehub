@@ -12,6 +12,9 @@
                 <div class="card-body text-center">
                     <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'images/user-image.jpg') }}" class="rounded-circle mb-3" alt="user icon" style="width: 120px; height: 120px;">
                     <h5 class="card-title">{{ current_user.username }}</h5>
+                    <h5 class="card-text text-success">
+                        <i class="fas fa-award"></i> Points Balance: {{ current_user.points or 0 }} Points
+                    </h5>
                     <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4">
                         {{ form.hidden_tag() }}
                         <div class="form-group">
@@ -40,16 +43,18 @@
                         {% for recipe in recipes %}
                             <div class="col-lg-6 mb-4">
                                 <div class="card shadow-sm border-0">
-                                    <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/default_recipe_image.jpg') }}" class="card-img-top" alt="recipe image">
+                                    <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
+                                        <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/default_recipe_image.jpg') }}" class="card-img-top" alt="recipe image">
+                                    </a>
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id) }}" class="recipe-name">{{ recipe.title }}</a>
+                                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="recipe-name">{{ recipe.title }}</a>
                                         </h5>
                                         <p class="card-text"><strong>Category:</strong> {{ recipe.category_name }}</p>
                                         <p class="card-text">{{ recipe.description }}</p>
                                         <div class="d-flex justify-content-between">
-                                            <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                            <a href="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id) }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id }}" data-item-type="recipe">Delete</a>
+                                            <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id|string) }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete</a>
                                         </div>
                                     </div>
                                 </div>
