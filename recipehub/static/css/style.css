@@ -293,3 +293,125 @@ button:hover {
     margin-right: 0; /* No margin on the last button */
 }
 
+/* Add styling for Add Recipe Page with background image */
+.add-recipe-page {
+    background-image: url('/static/images/home-page-background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    color: white;
+    min-height: 100vh; /* Ensure full screen height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-recipe-page .card {
+    background-color: rgba(255, 255, 255, 0.9); /* Make the form background slightly transparent */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.add-recipe-page h1 {
+    color: #fff; /* Ensure text is visible on the background image */
+}
+
+.add-recipe-page label {
+    color: #333; /* Keep form labels dark for readability */
+}
+
+.add-recipe-page .form-control {
+    background-color: #f8f9fa;
+}
+
+.add-recipe-page button {
+    background-color: #0056b3;
+    color: white;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.add-recipe-page button:hover {
+    background-color: #004494;
+}
+
+/* Background styling for the Change Username page */
+.change-username-page {
+    background-image: url('/static/images/new-hero-bg.jpg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    color: white;
+    min-height: 100vh; /* Ensure full screen height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-username-page .card {
+    background-color: rgba(255, 255, 255, 0.9); /* Make the form background slightly transparent */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.change-username-page h1 {
+    color: #fff; /* Ensure text is visible on the background image */
+}
+
+.change-username-page label {
+    color: #333; 
+}
+
+.change-username-page .form-control {
+    background-color: #f8f9fa;
+}
+
+.change-username-page button {
+    background-color: #0056b3;
+    color: white;
+    width: 100%;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.change-username-page button:hover {
+    background-color: #004494;
+}
+
+/* Text Center Styling */
+.text-center {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.100); /* Add text shadow to enhance readability */
+    margin-bottom: 20px; /* Add some space below the title */
+}
+
+/* Profile Image Styling */
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Profile Image Remover Checkbox Styling */
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
