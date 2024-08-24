@@ -10,17 +10,23 @@
                     <h4 class="mb-0">Account Management</h4>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'images/user-image.jpg') }}" class="rounded-circle mb-3" alt="user icon" style="width: 120px; height: 120px;">
+                    <!-- Display user's profile image or default image if not available -->
+                    <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'uploads/profile_images/user-image.jpg') }}" 
+                         alt="Profile Image" class="profile-image">
                     <h5 class="card-title">{{ current_user.username }}</h5>
                     <h5 class="card-text text-success">
-                        <i class="fas fa-award"></i> Points Balance: {{ current_user.points or 0 }} Points
+                        <i class="fas fa-award"></i> Points Balance: <span id="points-balance">Loading...</span>
                     </h5>
                     <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4">
                         {{ form.hidden_tag() }}
                         <div class="form-group">
                             <input type="file" name="profile_image" class="form-control-file mb-3">
-                            <button type="submit" class="btn btn-primary btn-block">Update Profile Image</button>
                         </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="remove_image" name="remove_image">
+                            <label class="form-check-label" for="remove_image">Remove Current Profile Image</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Update Profile Image</button>
                     </form>
                     <a href="{{ url_for('auth.change_username', username=current_user.username) }}" class="btn btn-warning btn-block mb-2">Change Username</a>
                     <a href="{{ url_for('auth.delete_account', username=current_user.username) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ current_user.username }}" data-item-type="account">Delete Account</a>
@@ -32,8 +38,9 @@
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="mb-4">Welcome, {{ current_user.username }}</h1>
-                <div>
+                <div class="btn-group">
                     <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-success btn-lg">Add New Recipe</a>
+                    <a href="{{ url_for('recipes.view_bookmarks') }}" class="btn btn-info btn-lg">View Bookmarks</a>
                 </div>
             </div>
             <div class="manage-recipes">
@@ -44,7 +51,7 @@
                             <div class="col-lg-6 mb-4">
                                 <div class="card shadow-sm border-0">
                                     <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
-                                        <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/default_recipe_image.jpg') }}" class="card-img-top" alt="recipe image">
+                                        <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top" alt="recipe image">
                                     </a>
                                     <div class="card-body">
                                         <h5 class="card-title">
@@ -91,4 +98,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
