@@ -1,4 +1,3 @@
-// Ensure the DOM is fully loaded before executing scripts
 document.addEventListener("DOMContentLoaded", function () {
     // Function to filter recipes based on search input and category selection
     function filterRecipes() {
@@ -26,8 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        if (notFound) {
-            notFound.style.display = hasResults ? "none" : "block";
+        if (!hasResults) {
+            notFound.style.display = "block";
+        } else {
+            notFound.style.display = "none";
         }
     }
 
@@ -66,12 +67,71 @@ document.addEventListener("DOMContentLoaded", function () {
             let deleteUrl;
 
             if (itemType === 'recipe') {
-                deleteUrl = '/delete_recipe/' + itemId;
+                deleteUrl = `/delete_recipe/${itemId}`;
             } else if (itemType === 'account') {
-                deleteUrl = '/delete_account/' + itemId;
+                deleteUrl = `/delete_account/${itemId}`;
             }
 
             window.location.href = deleteUrl;
         });
+    }
+
+    // Share buttons functionality 
+    const shareButtons = document.querySelectorAll('.share-btn');
+
+    shareButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const shareUrl = this.getAttribute('data-url');
+            const shareText = this.getAttribute('data-text');
+            const platform = this.getAttribute('data-platform');
+            let url = '';
+
+            if (platform === 'facebook') {
+                url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+            } else if (platform === 'twitter') {
+                url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+            } else if (platform === 'whatsapp') {
+                url = `https://wa.me/?text=${encodeURIComponent(shareText)}%20${encodeURIComponent(shareUrl)}`;
+            }
+
+            window.open(url, '_blank');
+        });
+    });
+
+    // Function to update the user's points in real-time
+    function updatePoints() {
+        const protocol = window.location.protocol;  // Ensure HTTPS is used if the page is served over HTTPS
+        const host = window.location.host;  // Get the correct host
+        const apiUrl = `${protocol}//${host}/api/get_user_points`;  // Construct the API URL
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const pointsElement = document.getElementById("points-balance");
+                if (pointsElement) {
+                    pointsElement.textContent = `${data.points} Points`;
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching user points:", error);
+                // Display an error message to the user
+                const pointsElement = document.getElementById("points-balance");
+                if (pointsElement) {
+                    pointsElement.textContent = "Error loading points";
+                }
+            });
+    }
+
+    // Check if user is authenticated before updating points
+    const isAuthenticated = document.body.getAttribute('data-authenticated') === 'True';
+
+    if (isAuthenticated) {
+        // Call updatePoints when the page loads
+        updatePoints();
     }
 });
