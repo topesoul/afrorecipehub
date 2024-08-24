@@ -1,0 +1,31 @@
+<!-- bookmarks.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center-bg mb-4">Your Bookmarked Recipes</h1>
+    <div class="row">
+        {% if recipes %}
+            {% for recipe in recipes %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
+                            <img src="{{ url_for('static', filename=recipe.image_path if recipe.image_path else 'images/default_recipe_image.jpg') }}" class="card-img-top" alt="recipe image">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="recipe-name">{{ recipe.title }}</a>
+                            </h5>
+                            <p class="card-text"><strong>Category:</strong> {{ recipe.category_name }}</p>
+                            <p class="card-text">{{ recipe.description }}</p>
+                            <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" class="btn btn-outline-primary btn-sm">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">You have not bookmarked any recipes yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
