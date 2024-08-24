@@ -8,11 +8,11 @@
         <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-primary btn-lg">Add New Recipe</a>
     </div>
 
-    <!-- Site Statistics -->
-    <div class="text-center mb-4">
-        <p>We currently have <strong>{{ recipes|length }}</strong> delicious recipes available!</p>
-        <p>Our community is growing with <strong>{{ unique_visitors }}</strong> unique visitors!</p>
-    </div>
+<!-- Site Statistics -->
+<div class="text-center mb-4">
+    <p>We currently have <strong>{{ recipes|length }}</strong> delicious recipes available!</p>
+    <p>Our community is growing with <strong>{{ registered_users }}</strong> registered users already! Lot's of exciting content from our amazing members!</p>
+</div>
 
     <!-- Filter and Search Section -->
     <div class="row justify-content-center mb-4">
