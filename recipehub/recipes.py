@@ -6,6 +6,7 @@ from recipehub.forms import RecipeForm, CommentForm, BookmarkForm
 from recipehub import mongo
 from bson.objectid import ObjectId
 from datetime import datetime
+from recipehub.models import User
 
 recipes_bp = Blueprint('recipes', __name__)
 
@@ -13,19 +14,14 @@ DEFAULT_IMAGE_PATH = 'images/default_recipe_image.jpg'
 
 @recipes_bp.route('/get_recipes')
 def get_recipes():
-    # Track unique visitors
-    if not session.get('has_visited'):
-        session['has_visited'] = True
-        mongo.db.site_stats.update_one({}, {"$inc": {"unique_visitors": 1}}, upsert=True)
+    # Get the count of registered users
+    registered_users = mongo.db.users.count_documents({})
     
-    # Retrieve and display unique visitor count
-    site_stats = mongo.db.site_stats.find_one() or {}
-    unique_visitors = site_stats.get('unique_visitors', 0)
-
+    # Retrieve all recipes and categories
     recipes = list(mongo.db.recipes.find())
     categories = list(mongo.db.categories.find())
     category_list = [(str(category["_id"]), category["name"]) for category in categories]
-    
+
     user_bookmarks = []
     if current_user.is_authenticated:
         user = mongo.db.users.find_one({"_id": ObjectId(current_user.get_id())})
@@ -40,7 +36,7 @@ def get_recipes():
     
     bookmark_form = BookmarkForm()  # Initialize the bookmark form
 
-    return render_template('recipes.html', recipes=recipes, categories=category_list, unique_visitors=unique_visitors, form=bookmark_form)
+    return render_template('recipes.html', recipes=recipes, categories=category_list, registered_users=registered_users, form=bookmark_form)
 
 @recipes_bp.route('/new_recipe', methods=['GET', 'POST'])
 @login_required
@@ -76,13 +72,10 @@ def add_recipe():
         }
         mongo.db.recipes.insert_one(recipe)
         
-        # Increment user's points
-        mongo.db.users.update_one(
-            {"_id": ObjectId(current_user.get_id())},
-            {"$inc": {"points": 10}}
-        )
+        # Recalculate the user's points after adding a new recipe
+        User.get_user_by_id(current_user.get_id()).calculate_points()
 
-        flash('Recipe added! You earned 10 points.', 'success')
+        flash('Recipe added! Points have been updated.', 'success')
         return redirect(url_for('recipes.get_recipes'))
     
     return render_template('add_recipe.html', form=form)
@@ -100,6 +93,9 @@ def edit_recipe(recipe_id):
         flash('You do not have permission to edit this recipe.', 'danger')
         return redirect(url_for('recipes.get_recipes'))
 
+    # Convert ingredients list to a string with each ingredient on a new line
+    recipe['ingredients'] = "\n".join(recipe['ingredients'])
+
     form = RecipeForm(obj=recipe)
     form.category.choices = [(str(category["_id"]), category["name"]) for category in mongo.db.categories.find()]
     
@@ -107,6 +103,7 @@ def edit_recipe(recipe_id):
         update_data = {
             "title": form.title.data,
             "description": form.description.data,
+            # Convert back to list by splitting on new lines
             "ingredients": form.ingredients.data.splitlines(),
             "instructions": form.instructions.data,
             "category_id": ObjectId(form.category.data),
@@ -146,13 +143,10 @@ def delete_recipe(recipe_id):
         
         mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
         
-        # Decrement user's points
-        mongo.db.users.update_one(
-            {"_id": ObjectId(current_user.get_id())},
-            {"$inc": {"points": -10}}
-        )
-        
-        flash('Recipe deleted! 10 points deducted.', 'success')
+        # Recalculate the user's points after deleting a recipe
+        User.get_user_by_id(current_user.get_id()).calculate_points()
+
+        flash('Recipe deleted! Points have been updated.', 'success')
     else:
         flash('You do not have permission to delete this recipe.', 'danger')
     return redirect(url_for('recipes.get_recipes'))
@@ -182,11 +176,8 @@ def view_recipe(recipe_id):
             {"$inc": {"comment_count": 1}}
         )
         
-        # Increment user's points
-        mongo.db.users.update_one(
-            {"_id": ObjectId(current_user.get_id())},
-            {"$inc": {"points": 2}}
-        )
+        # Recalculate the user's points and update them in MongoDB
+        User.calculate_points(current_user.get_id())
         
         flash('Comment added! You earned 2 points.', 'success')
         return redirect(url_for('recipes.view_recipe', recipe_id=recipe_id))
@@ -230,4 +221,8 @@ def toggle_bookmark(recipe_id):
 def view_bookmarks():
     user = mongo.db.users.find_one({"_id": ObjectId(current_user.get_id())})
     bookmarked_recipes = list(mongo.db.recipes.find({"_id": {"$in": user.get('bookmarked_recipes', [])}}))
-    return render_template('bookmarked_recipes.html', recipes=bookmarked_recipes)
+            
+    # Initialize the form
+    form = BookmarkForm()
+                        
+    return render_template('bookmarks.html', recipes=bookmarked_recipes, form=form)
