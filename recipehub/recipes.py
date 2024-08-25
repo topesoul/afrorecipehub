@@ -73,7 +73,7 @@ def add_recipe():
         mongo.db.recipes.insert_one(recipe)
         
         # Recalculate the user's points after adding a new recipe
-        User.get_user_by_id(current_user.get_id()).calculate_points()
+        current_user.calculate_points()
 
         flash('Recipe added! Points have been updated.', 'success')
         return redirect(url_for('recipes.get_recipes'))
@@ -144,7 +144,7 @@ def delete_recipe(recipe_id):
         mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
         
         # Recalculate the user's points after deleting a recipe
-        User.get_user_by_id(current_user.get_id()).calculate_points()
+        current_user.calculate_points()
 
         flash('Recipe deleted! Points have been updated.', 'success')
     else:
@@ -177,7 +177,7 @@ def view_recipe(recipe_id):
         )
         
         # Recalculate the user's points and update them in MongoDB
-        User.calculate_points(current_user.get_id())
+        current_user.calculate_points()
         
         flash('Comment added! You earned 2 points.', 'success')
         return redirect(url_for('recipes.view_recipe', recipe_id=recipe_id))
@@ -226,3 +226,25 @@ def view_bookmarks():
     form = BookmarkForm()
                         
     return render_template('bookmarks.html', recipes=bookmarked_recipes, form=form)
+
+@recipes_bp.route('/delete_comment/<comment_id>', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})
+
+    if not comment:
+        flash('Comment not found.', 'danger')
+        return redirect(url_for('recipes.get_recipes'))
+
+    # Check if the current user is the author of the comment or an admin
+    if str(comment['user_id']) != current_user.get_id() and not session.get('is_admin'):
+        flash('You do not have permission to delete this comment.', 'danger')
+        return redirect(url_for('recipes.view_recipe', recipe_id=comment['recipe_id']))
+
+    mongo.db.comments.delete_one({"_id": ObjectId(comment_id)})
+
+    # Recalculate the comment author's points after deleting a comment
+    User.calculate_points_static(comment['user_id'])
+    
+    flash('Comment deleted successfully!', 'success')
+    return redirect(url_for('recipes.view_recipe', recipe_id=comment['recipe_id']))
