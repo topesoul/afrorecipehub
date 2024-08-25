@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, session
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from bson import ObjectId
 
@@ -10,7 +10,7 @@ from bson import ObjectId
 if os.path.exists("env.py"):
     import env
 
-# Global variables for extensions
+# Initialize the Flask app and extensions
 mongo = None
 bcrypt = None
 login_manager = None
@@ -38,11 +38,18 @@ def create_app():
     login_manager.login_message_category = "info"  # Flash message category for login
 
     # User Loader for Flask-Login
+    from recipehub.models import User  # Import the User class from models
+
     @login_manager.user_loader
     def load_user(user_id):
-        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-        if user:
-            return User(str(user["_id"]), user["username"], user.get("profile_image", "uploads/profile_images/user-image.jpg"))
+        user_data = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        if user_data:
+            return User(
+                user_id=str(user_data["_id"]),
+                username=user_data["username"],
+                profile_image=user_data.get("profile_image", "uploads/profile_images/user-image.jpg"),
+                points=user_data.get("points")
+            )
         return None
 
     # Register blueprints for modularizing the application
@@ -65,25 +72,6 @@ def create_app():
         return render_template('500.html'), 500
 
     return app
-
-# Define the User model for Flask-Login
-class User(UserMixin):
-    def __init__(self, user_id, username, profile_image="uploads/profile_images/user-image.jpg"):
-        self.id = str(user_id)  # Ensure id is a string
-        self.username = username
-        self.profile_image = profile_image
-
-    @property
-    def points(self):
-        # Calculate and return the user's points
-        recipes_count = mongo.db.recipes.count_documents({"created_by": ObjectId(self.id)})
-        comments_count = mongo.db.comments.count_documents({"user_id": ObjectId(self.id)})
-        points = (recipes_count * 10) + (comments_count * 2)
-        mongo.db.users.update_one(
-            {"_id": ObjectId(self.id)},
-            {"$set": {"points": points}}
-        )
-        return points
 
 # Run the application only if this script is executed directly
 if __name__ == "__main__":
