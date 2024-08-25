@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-10">
@@ -61,13 +62,17 @@
       <div class="card mb-2">
         <div class="card-body">
           <p>{{ comment.comment }}</p>
-          <small class="text-muted"
-            >Posted by {{ comment.username }} on {{
-            comment.created_at.strftime('%Y-%m-%d') }}</small
-          >
+          <small class="text-muted">Posted by {{ comment.username }} on {{ comment.created_at.strftime('%Y-%m-%d') }}</small>
+          {% if current_user.is_authenticated and (current_user.get_id() == comment.user_id|string or session.get('is_admin')) %}
+          <form method="POST" action="{{ url_for('recipes.delete_comment', comment_id=comment._id|string) }}" class="d-inline-block">
+            {{ form.csrf_token }}
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          {% endif %}
         </div>
       </div>
-      {% endfor %} {% if current_user.is_authenticated %}
+      {% endfor %} 
+      {% if current_user.is_authenticated %}
       <form method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
