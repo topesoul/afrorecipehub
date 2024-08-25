@@ -6,14 +6,24 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h1 class="text-center">Change Username</h1>
+                
+                <!-- Display flash messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
                 <form method="POST" action="{{ url_for('auth.change_username', username=current_user.username) }}" class="card p-4 shadow-sm">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
                         <label for="username">New Username :</label>
-                        {{ form.username(class="form-control", id="username", value=current_user.username) }}
+                        <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}" onfocus="this.select()">
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Change Username</button>
-                </form>
+                </form>                
             </div>
         </div>
     </div>
