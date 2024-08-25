@@ -46,6 +46,27 @@ class User(UserMixin):
         return points
 
     @staticmethod
+    def calculate_points_static(user_id):
+        """
+        Calculate the user's points based on the number of recipes and comments they have created.
+        This method is static and does not require an instance of the User class.
+
+        :param user_id: The user's ID.
+        :return: Calculated points.
+        """
+        recipes_count = mongo.db.recipes.count_documents({"created_by": ObjectId(user_id)})
+        comments_count = mongo.db.comments.count_documents({"user_id": ObjectId(user_id)})
+        points = (recipes_count * 10) + (comments_count * 2)
+
+        # Update the points in the database
+        mongo.db.users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": {"points": points}}
+        )
+
+        return points
+
+    @staticmethod
     def get_user_by_id(user_id):
         """
         Retrieve a User object by their ID.
