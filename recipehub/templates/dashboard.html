@@ -17,7 +17,7 @@
                     <h5 class="card-text text-success mt-2">
                         <i class="fas fa-award" aria-hidden="true"></i> Points Balance: <span id="points-balance">Loading...</span>
                     </h5>
-                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mt-4">
+                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mt-4" aria-label="Update Profile Image">
                         {{ form.hidden_tag() }}
                         <div class="form-group">
                             <label for="profile_image" class="sr-only">Upload profile image</label>
@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form method="POST" action="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id|string) }}">
+                <form method="POST" action="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id|string) }}" aria-label="Delete Recipe">
                     {{ form.hidden_tag() }}
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
@@ -120,7 +120,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form method="POST" action="{{ url_for('auth.delete_account', username=current_user.username) }}">
+                <form method="POST" action="{{ url_for('auth.delete_account', username=current_user.username) }}" aria-label="Delete Account">
                     {{ form.hidden_tag() }}
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
