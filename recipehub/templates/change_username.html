@@ -19,8 +19,8 @@
                 <form method="POST" action="{{ url_for('auth.change_username', username=current_user.username) }}" class="card p-4 shadow-sm">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-                        <label for="username">New Username :</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}" onfocus="this.select()">
+                        <label for="username">New Username:</label>
+                        {{ form.username(onfocus="this.select()") }}
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Change Username</button>
                 </form>                
