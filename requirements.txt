@@ -14,3 +14,4 @@ Werkzeug==2.0.1
 importlib_metadata==7.1.0
 typing_extensions==4.11.0
 zipp==3.19.0
+email_validator
