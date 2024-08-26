@@ -195,7 +195,9 @@ button {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-    width: auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px; /* Add some space between buttons */
 }
 
 button:hover {
@@ -562,5 +564,19 @@ footer {
 
     #hero-section h1 {
         font-size: 1.8rem;
+    }
+
+    /* Dashboard Button Group Adjustments */
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        margin-bottom: 10px;
+    }
+
+    .btn-group .btn:last-child {
+        margin-bottom: 0;
     }
 }
