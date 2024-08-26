@@ -1,3 +1,4 @@
+/* General Styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -11,39 +12,121 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    padding: 20px;
 }
 
 .auth-card {
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
+    margin: 0 auto;
 }
 
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 1rem;
+        max-width: 320px;
+    }
+
+    .auth-page {
+        padding: 10px;
+    }
+
+    .auth-card h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Header Styling */
 header {
     background-color: #0056b3;
     color: #fff;
-    padding: 1rem 0;
+    padding: 0.75rem 1rem;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Styling */
+nav {
+    background-color: #0056b3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 nav a {
     color: #fff;
     margin: 0 1rem;
     text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
-.nav-item .nav-link.active {
-    font-weight: bold;
-    color: #ffcc00 !important;
+/* Responsive Navbar */
+.navbar-toggler {
+    border: none;
+    background-color: #004494;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    border-radius: 5px;
+    display: none;
+    width: 100%;
+    text-align: left;
 }
 
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-collapse {
+        display: none;
+        background-color: #0056b3;
+        width: 100%;
+        text-align: left;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .navbar-toggler.collapsed + .navbar-collapse {
+        display: flex;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    nav a {
+        margin: 0.5rem 1rem;
+        padding: 0.5rem;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Expand/Collapse Navbar Functionality */
+.navbar-toggler:focus + .navbar-collapse,
+.navbar-toggler:active + .navbar-collapse {
+    max-height: 300px;
+}
+
+/* Main Content */
 main {
     padding: 1rem;
 }
@@ -52,6 +135,7 @@ h1, h4 {
     color: #333;
 }
 
+/* Form Styling */
 form {
     background-color: #fff;
     padding: 1rem;
@@ -154,6 +238,15 @@ footer {
     color: #666;
     margin-top: 4rem;
     border-top: 1px solid #ddd;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    footer {
+        padding: 1rem 0;
+    }
 }
 
 /* Hero Section */
@@ -178,6 +271,32 @@ footer {
 #hero-section h1, #hero-section p {
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#hero-section h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    #hero-section h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #hero-section h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    #hero-section h1 {
+        font-size: 1.8rem;
+    }
 }
 
 /* General Button Styling */
@@ -290,7 +409,7 @@ button:hover {
 }
 
 .btn-group .btn:last-child {
-    margin-right: 0; /* No margin on the last button */
+    margin-right: 0;
 }
 
 /* Add styling for Add Recipe Page with background image */
@@ -301,24 +420,25 @@ button:hover {
     background-repeat: no-repeat;
     padding: 100px 0;
     color: white;
-    min-height: 100vh; /* Ensure full screen height */
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .add-recipe-page .card {
-    background-color: rgba(255, 255, 255, 0.9); /* Make the form background slightly transparent */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .add-recipe-page h1 {
-    color: #fff; /* Ensure text is visible on the background image */
+    color: #fff;
 }
 
 .add-recipe-page label {
-    color: #333; /* Keep form labels dark for readability */
+    color: #333;
 }
 
 .add-recipe-page .form-control {
@@ -347,24 +467,25 @@ button:hover {
     background-repeat: no-repeat;
     padding: 100px 0;
     color: white;
-    min-height: 100vh; /* Ensure full screen height */
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .change-username-page .card {
-    background-color: rgba(255, 255, 255, 0.9); /* Make the form background slightly transparent */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .change-username-page h1 {
-    color: #fff; /* Ensure text is visible on the background image */
+    color: #fff;
 }
 
 .change-username-page label {
-    color: #333; 
+    color: #333;
 }
 
 .change-username-page .form-control {
@@ -388,8 +509,8 @@ button:hover {
 /* Text Center Styling */
 .text-center {
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.100); /* Add text shadow to enhance readability */
-    margin-bottom: 20px; /* Add some space below the title */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 /* Profile Image Styling */
@@ -408,10 +529,34 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
-  }
+}
   
-  .form-check-input:checked {
+.form-check-input:checked {
     background-color: #007bff;
     border-color: #007bff;
-  }
-  
+}
+
+/* Responsive Navbar and Footer Styling */
+@media (max-width: 768px) {
+    header {
+        padding: 0.5rem;
+    }
+
+    footer {
+        padding: 1rem 0;
+    }
+
+    nav a {
+        margin: 0.5rem 0;
+        display: block;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    #hero-section h1 {
+        font-size: 2rem;
+    }
+}
