@@ -64,21 +64,35 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#confirm-delete-btn').click(function () {
             const itemId = $(this).data('item-id');
             const itemType = $(this).data('item-type');
-            let deleteUrl;
+            let formActionUrl;
 
             if (itemType === 'recipe') {
-                deleteUrl = `/delete_recipe/${itemId}`;
+                formActionUrl = `/delete_recipe/${itemId}`;
             } else if (itemType === 'account') {
-                deleteUrl = `/delete_account/${itemId}`;
+                formActionUrl = `/delete_account/${itemId}`;
             }
 
-            window.location.href = deleteUrl;
+            // Create a form dynamically to submit as POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = formActionUrl;
+
+            // CSRF token field if needed
+            const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrf_token';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            // Append the form to the body and submit
+            document.body.appendChild(form);
+            form.submit();
         });
     }
 
     // Share buttons functionality 
     const shareButtons = document.querySelectorAll('.share-btn');
-
     shareButtons.forEach(button => {
         button.addEventListener('click', function () {
             const shareUrl = this.getAttribute('data-url');
