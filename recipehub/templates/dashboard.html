@@ -12,15 +12,16 @@
                 <div class="card-body text-center">
                     <!-- Display user's profile image or default image if not available -->
                     <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'uploads/profile_images/user-image.jpg') }}" 
-                         alt="Profile Image" class="profile-image">
+                         alt="{{ current_user.username }}'s Profile Image" class="profile-image">
                     <h5 class="card-title">{{ current_user.username }}</h5>
                     <h5 class="card-text text-success">
-                        <i class="fas fa-award"></i> Points Balance: <span id="points-balance">Loading...</span>
+                        <i class="fas fa-award" aria-hidden="true"></i> Points Balance: <span id="points-balance">Loading...</span>
                     </h5>
-                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4">
+                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4" aria-label="Update profile image form">
                         {{ form.hidden_tag() }}
                         <div class="form-group">
-                            <input type="file" name="profile_image" class="form-control-file mb-3">
+                            <label for="profile_image" class="sr-only">Upload profile image</label>
+                            <input type="file" name="profile_image" id="profile_image" class="form-control-file mb-3">
                         </div>
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="remove_image" name="remove_image">
@@ -29,7 +30,7 @@
                         <button type="submit" class="btn btn-primary btn-block">Update Profile Image</button>
                     </form>
                     <a href="{{ url_for('auth.change_username', username=current_user.username) }}" class="btn btn-warning btn-block mb-2">Change Username</a>
-                    <a href="{{ url_for('auth.delete_account', username=current_user.username) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ current_user.username }}" data-item-type="account">Delete Account</a>
+                    <a href="#" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-account-modal">Delete Account</a>
                 </div>
             </div>
         </div>
@@ -50,8 +51,8 @@
                         {% for recipe in recipes %}
                             <div class="col-lg-6 mb-4">
                                 <div class="card shadow-sm border-0">
-                                    <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}">
-                                        <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top" alt="recipe image">
+                                    <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe._id|string) }}" title="{{ recipe.title }}">
+                                        <img src="{{ url_for('static', filename=recipe.image_path) }}" class="card-img-top" alt="{{ recipe.title }}">
                                     </a>
                                     <div class="card-body">
                                         <h5 class="card-title">
@@ -61,7 +62,7 @@
                                         <p class="card-text">{{ recipe.description }}</p>
                                         <div class="d-flex justify-content-between">
                                             <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}" class="btn btn-warning btn-sm">Edit</a>
-                                            <a href="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id|string) }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" data-item-id="{{ recipe._id|string }}" data-item-type="recipe">Delete</a>
+                                            <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-recipe-modal-{{ recipe._id|string }}">Delete</a>
                                         </div>
                                     </div>
                                 </div>
@@ -78,22 +79,51 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
+<!-- Delete Recipe Modal -->
+{% for recipe in recipes %}
+<div class="modal fade" id="delete-recipe-modal-{{ recipe._id|string }}" tabindex="-1" aria-labelledby="delete-recipe-modal-label-{{ recipe._id|string }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-modal-label">Warning</h5>
+                <h5 class="modal-title" id="delete-recipe-modal-label-{{ recipe._id|string }}">Warning</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this <span id="item-type"></span>?</p>
+                <p>Are you sure you want to delete this recipe?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+                <form method="POST" action="{{ url_for('recipes.delete_recipe', recipe_id=recipe._id|string) }}">
+                    {{ form.hidden_tag() }}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="delete-account-modal" tabindex="-1" aria-labelledby="delete-account-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-account-modal-label">Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your account?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form method="POST" action="{{ url_for('auth.delete_account', username=current_user.username) }}">
+                    {{ form.hidden_tag() }}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </div>
