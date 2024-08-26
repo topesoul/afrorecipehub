@@ -1,10 +1,25 @@
-/workspace/afrorecipehub/recipehub/static/css/style.css
+:root {
+    /* CSS Variables for colors */
+    --primary-color: #0056b3;
+    --primary-hover-color: #004494;
+    --text-color: #333;
+    --white: #fff;
+    --grey-light: #f9f9f9;
+    --grey-dark: #666;
+    --btn-warning-color: #ffcc00;
+    --btn-warning-hover-color: #e6b800;
+    --btn-danger-color: #dc3545;
+    --btn-danger-hover-color: #c82333;
+    --background-overlay-color: rgba(0, 0, 0, 0.7);
+}
+
 /* General Styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: var(--grey-light);
+    color: var(--text-color); /* Ensure text has sufficient contrast */
 }
 
 /* Background styling for login and register pages */
@@ -18,6 +33,7 @@ body {
     flex-direction: column;
     justify-content: center;
     padding: 20px;
+    color: var(--text-color); /* Ensure text contrast on the background */
 }
 
 .auth-card {
@@ -47,8 +63,8 @@ body {
 
 /* Header Styling */
 header {
-    background-color: #0056b3;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--white);
     padding: 0.75rem 1rem;
     text-align: center;
     position: sticky;
@@ -60,7 +76,7 @@ header {
 
 /* Navbar Styling */
 nav.navbar {
-    background-color: #0056b3;
+    background-color: var(--primary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,7 +85,7 @@ nav.navbar {
 }
 
 nav.navbar a.nav-link {
-    color: #fff;
+    color: var(--white);
     margin: 0 1rem;
     text-decoration: none;
     font-weight: 500;
@@ -79,9 +95,9 @@ nav.navbar a.nav-link {
 /* Responsive Navbar */
 .navbar-toggler {
     border: none;
-    background-color: #004494;
+    background-color: var(--primary-hover-color);
     padding: 0.5rem 1rem;
-    color: #fff;
+    color: var(--white);
     border-radius: 5px;
     display: none;
     width: 100%;
@@ -95,7 +111,7 @@ nav.navbar a.nav-link {
 
     .navbar-collapse {
         display: none;
-        background-color: #0056b3;
+        background-color: var(--primary-color);
         width: 100%;
         text-align: left;
         flex-direction: column;
@@ -133,12 +149,12 @@ main {
 }
 
 h1, h4 {
-    color: #333;
+    color: var(--text-color);
 }
 
 /* Form Styling */
 form {
-    background-color: #fff;
+    background-color: var(--white);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -148,7 +164,7 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: #333;
+    color: var(--text-color);
 }
 
 input, textarea, select {
@@ -158,39 +174,40 @@ input, textarea, select {
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 input:focus, textarea:focus, select:focus {
     outline: none;
-    border-color: #0056b3;
+    border-color: var(--primary-color);
     box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
 }
 
+/* General Button Styling */
 button {
-    background-color: #0056b3;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--white);
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
-    width: 100%;
+    width: auto;
 }
 
 button:hover {
-    background-color: #004494;
+    background-color: var(--primary-hover-color);
 }
 
 a {
-    color: #0056b3;
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
 }
 
 a:hover {
-    color: #004494;
+    color: var(--primary-hover-color);
     text-decoration: underline;
 }
 
@@ -200,7 +217,7 @@ a:hover {
     transition: all 0.3s ease;
     border-radius: 15px;
     overflow: hidden;
-    background-color: #fff;
+    background-color: var(--white);
     margin-bottom: 20px;
 }
 
@@ -218,11 +235,11 @@ a:hover {
 .recipe-card .card-body h5 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 .recipe-card .card-body p {
-    color: #666;
+    color: var(--grey-dark);
 }
 
 .recipe-card .card-body .btn {
@@ -233,10 +250,10 @@ a:hover {
 
 /* Footer Styling */
 footer {
-    background-color: #f4f4f4;
+    background-color: var(--grey-light);
     padding: 2rem 0;
     text-align: center;
-    color: #666;
+    color: var(--grey-dark);
     margin-top: 4rem;
     border-top: 1px solid #ddd;
     position: relative;
@@ -252,17 +269,17 @@ footer {
 
 /* Hero Section */
 #hero-section {
-    background-image: url('/static/images/new-hero-bg.jpg.jpg');
+    background-image: url('/static/images/new-hero-bg.jpg');
     background-size: cover;
     background-position: center;
     padding: 100px 0;
-    color: white;
+    color: var(--white);
     position: relative;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 4px var(--background-overlay-color);
 }
 
 .hero-overlay {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--background-overlay-color);
     padding: 50px;
     border-radius: 10px;
     display: inline-block;
@@ -270,8 +287,8 @@ footer {
 }
 
 #hero-section h1, #hero-section p {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    text-shadow: 2px 2px 4px var(--background-overlay-color);
 }
 
 #hero-section h1 {
@@ -300,55 +317,33 @@ footer {
     }
 }
 
-/* General Button Styling */
-button {
-    background-color: #0056b3;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    width: auto;
-}
-
-button:hover {
-    background-color: #004494;
-}
-
+/* Button Styles */
 .btn-outline-primary, .btn-outline-danger {
     border-width: 2px;
 }
 
 .btn-outline-primary:hover, .btn-outline-danger:hover {
     background-color: #f8f9fa;
-    color: #0056b3;
-}
-
-.btn-warning, .btn-danger {
-    border-radius: 25px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    color: var(--primary-color);
 }
 
 .btn-warning {
-    background-color: #ffcc00;
-    color: #333;
+    background-color: var(--btn-warning-color);
+    color: var(--text-color);
 }
 
 .btn-warning:hover {
-    background-color: #e6b800;
+    background-color: var(--btn-warning-hover-color);
     color: #000;
 }
 
 .btn-danger {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: var(--btn-danger-color);
+    color: var(--white);
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    background-color: var(--btn-danger-hover-color);
 }
 
 /* Modal Button Styling */
@@ -369,42 +364,15 @@ button:hover {
 }
 
 .modal-footer .btn-danger {
-    background-color: #dc3545;
+    background-color: var(--btn-danger-color);
     border: none;
 }
 
 .modal-footer .btn-danger:hover {
-    background-color: #c82333;
+    background-color: var(--btn-danger-hover-color);
 }
 
 /* Adjust edit and delete buttons to match in shape and size */
-.btn-warning, .btn-danger {
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: auto;
-}
-
-.btn-warning {
-    background-color: #ffc107;
-    color: #333;
-}
-
-.btn-warning:hover {
-    background-color: #e0a800;
-    color: #000;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-/* Add space between buttons */
 .btn-group .btn {
     margin-right: 10px;
 }
@@ -420,7 +388,7 @@ button:hover {
     background-position: center;
     background-repeat: no-repeat;
     padding: 100px 0;
-    color: white;
+    color: var(--white);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -435,11 +403,11 @@ button:hover {
 }
 
 .add-recipe-page h1 {
-    color: #fff;
+    color: var(--white);
 }
 
 .add-recipe-page label {
-    color: #333;
+    color: var(--text-color);
 }
 
 .add-recipe-page .form-control {
@@ -447,8 +415,8 @@ button:hover {
 }
 
 .add-recipe-page button {
-    background-color: #0056b3;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     width: 100%;
     border-radius: 25px;
     padding: 10px 20px;
@@ -457,17 +425,17 @@ button:hover {
 }
 
 .add-recipe-page button:hover {
-    background-color: #004494;
+    background-color: var(--primary-hover-color);
 }
 
 /* Background styling for the Change Username page */
 .change-username-page {
-    background-image: url('/static/images/new-hero-bg.jpg.jpg'); 
+    background-image: url('/static/images/new-hero-bg.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 100px 0;
-    color: white;
+    color: var(--white);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -482,11 +450,11 @@ button:hover {
 }
 
 .change-username-page h1 {
-    color: #fff;
+    color: var(--white);
 }
 
 .change-username-page label {
-    color: #333;
+    color: var(--text-color);
 }
 
 .change-username-page .form-control {
@@ -494,8 +462,8 @@ button:hover {
 }
 
 .change-username-page button {
-    background-color: #0056b3;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     width: 100%;
     border-radius: 25px;
     padding: 10px 20px;
@@ -504,7 +472,7 @@ button:hover {
 }
 
 .change-username-page button:hover {
-    background-color: #004494;
+    background-color: var(--primary-hover-color);
 }
 
 /* Text Center Styling */
@@ -526,15 +494,15 @@ button:hover {
 .form-check-input {
     width: 20px;
     height: 20px;
-    border: 2px solid #007bff;
+    border: 2px solid var(--primary-color);
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
 }
   
 .form-check-input:checked {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 /* Responsive Navbar and Footer Styling */
