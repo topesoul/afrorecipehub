@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (filterForm) {
         filterForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            filterRecipes();
+            e.preventDefault(); // Prevent the form from submitting normally
+            filterRecipes(); // Filter the recipes based on the current input and selection
         });
     }
 
-    // Delete confirmation modal functionality
+    // Delete confirmation modal functionality for recipes
     const deleteModal = document.getElementById('delete-modal');
     if (deleteModal) {
         $('#delete-modal').on('show.bs.modal', function (event) {
