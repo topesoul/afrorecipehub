@@ -16,6 +16,13 @@ bcrypt = None
 login_manager = None
 
 def create_app():
+    """
+    Factory function to create and configure the Flask application instance.
+    Initializes all necessary extensions and registers blueprints.
+
+    Returns:
+        Flask: The Flask application instance.
+    """
     app = Flask(
         __name__,
         static_folder='static',  # Specify the folder for static files
@@ -42,6 +49,15 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
+        """
+        Load a user by ID for Flask-Login sessions.
+
+        Args:
+            user_id (str): The user's ID.
+
+        Returns:
+            User: The User object if found, else None.
+        """
         user_data = mongo.db.users.find_one({"_id": ObjectId(user_id)})
         if user_data:
             return User(
@@ -65,19 +81,18 @@ def create_app():
     # Error handlers for 404 and 500 errors
     @app.errorhandler(404)
     def not_found_error(error):
+        """Handle 404 errors by rendering a custom 404 page."""
         return render_template('404.html'), 404
 
     @app.errorhandler(500)
     def internal_error(error):
+        """Handle 500 errors by rendering a custom 500 page."""
         return render_template('500.html'), 500
 
-    return app
+    # Add global context processors
+    @app.context_processor
+    def inject_user():
+        """Inject common user-related data into all templates."""
+        return dict(user=session.get('user'))
 
-# Run the application only if this script is executed directly
-if __name__ == "__main__":
-    app = create_app()
-    app.run(
-        host=os.environ.get("IP", "0.0.0.0"),
-        port=int(os.environ.get("PORT", "5000")),
-        debug=True
-    )
+    return app
