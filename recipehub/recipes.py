@@ -130,7 +130,7 @@ def edit_recipe(recipe_id):
     
     return render_template('edit_recipe.html', form=form, recipe=recipe)
 
-@recipes_bp.route('/delete_recipe/<recipe_id>')
+@recipes_bp.route('/delete_recipe/<recipe_id>', methods=['POST'])
 @login_required
 def delete_recipe(recipe_id):
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
@@ -140,10 +140,9 @@ def delete_recipe(recipe_id):
                 os.remove(os.path.join(current_app.root_path, 'static', recipe["image_path"]))
             except Exception as e:
                 flash(f"Error removing old image: {e}", 'danger')
-
-        # Delete the recipe
+        
         mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
-
+        
         # Find and delete all comments associated with the recipe
         comments = list(mongo.db.comments.find({"recipe_id": ObjectId(recipe_id)}))
         for comment in comments:
@@ -153,7 +152,7 @@ def delete_recipe(recipe_id):
         # Delete the comments
         mongo.db.comments.delete_many({"recipe_id": ObjectId(recipe_id)})
 
-        # Recalculate the recipe creator's points after deleting the recipe
+        # Recalculate the user's points after deleting a recipe
         current_user.calculate_points()
 
         flash('Recipe and associated comments deleted! Points have been updated.', 'success')
