@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -8,12 +9,19 @@ from bson.objectid import ObjectId
 from datetime import datetime
 from recipehub.models import User
 
+# Initialize the Blueprint for recipes
 recipes_bp = Blueprint('recipes', __name__)
 
+# Default image path for recipes without an uploaded image
 DEFAULT_IMAGE_PATH = 'images/default_recipe_image.jpg'
+
+# Configure basic logging settings
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 @recipes_bp.route('/get_recipes')
 def get_recipes():
+    """Fetch and display all recipes, categories, and user's bookmarked recipes."""
     # Get the count of registered users
     registered_users = mongo.db.users.count_documents({})
     
@@ -31,16 +39,16 @@ def get_recipes():
     for recipe in recipes:
         recipe['category_name'] = next((cat['name'] for cat in categories if cat['_id'] == recipe['category_id']), "Unknown")
         recipe['comment_count'] = mongo.db.comments.count_documents({"recipe_id": recipe["_id"]})
-        # Check if the recipe is bookmarked by the user
         recipe['is_bookmarked'] = recipe['_id'] in user_bookmarks
     
-    bookmark_form = BookmarkForm()  # Initialize the bookmark form
+    bookmark_form = BookmarkForm()
 
     return render_template('recipes.html', recipes=recipes, categories=category_list, registered_users=registered_users, form=bookmark_form)
 
 @recipes_bp.route('/new_recipe', methods=['GET', 'POST'])
 @login_required
 def add_recipe():
+    """Allow authenticated users to add a new recipe."""
     form = RecipeForm()
     form.category.choices = [(str(category["_id"]), category["name"]) for category in mongo.db.categories.find()]
     
@@ -74,7 +82,8 @@ def add_recipe():
         
         # Recalculate the user's points after adding a new recipe
         current_user.calculate_points()
-
+        logger.info(f"New recipe added by user {current_user.username}: {recipe['title']}")
+        
         flash('Recipe added! Points have been updated.', 'success')
         return redirect(url_for('recipes.get_recipes'))
     
@@ -83,6 +92,7 @@ def add_recipe():
 @recipes_bp.route('/edit_recipe/<recipe_id>', methods=['GET', 'POST'])
 @login_required
 def edit_recipe(recipe_id):
+    """Allow the creator or an admin to edit a recipe."""
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     if not recipe:
         flash('Recipe not found.', 'danger')
@@ -103,7 +113,6 @@ def edit_recipe(recipe_id):
         update_data = {
             "title": form.title.data,
             "description": form.description.data,
-            # Convert back to list by splitting on new lines
             "ingredients": form.ingredients.data.splitlines(),
             "instructions": form.instructions.data,
             "category_id": ObjectId(form.category.data),
@@ -125,6 +134,7 @@ def edit_recipe(recipe_id):
             update_data["image_path"] = os.path.join('uploads', 'recipes', filename)
         
         mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": update_data})
+        logger.info(f"Recipe updated by user {current_user.username}: {update_data['title']}")
         flash('Recipe updated!', 'success')
         return redirect(url_for('recipes.view_recipe', recipe_id=recipe_id))
     
@@ -133,16 +143,18 @@ def edit_recipe(recipe_id):
 @recipes_bp.route('/delete_recipe/<recipe_id>', methods=['POST'])
 @login_required
 def delete_recipe(recipe_id):
+    """Allow the creator or an admin to delete a recipe and its associated comments."""
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     if recipe and (recipe['created_by'] == ObjectId(current_user.get_id()) or session.get('is_admin')):
         if recipe["image_path"] != DEFAULT_IMAGE_PATH:
             try:
                 os.remove(os.path.join(current_app.root_path, 'static', recipe["image_path"]))
             except Exception as e:
+                logger.error(f"Error removing image {recipe['image_path']} for recipe {recipe_id}: {e}")
                 flash(f"Error removing old image: {e}", 'danger')
-        
+
         mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
-        
+
         # Find and delete all comments associated with the recipe
         comments = list(mongo.db.comments.find({"recipe_id": ObjectId(recipe_id)}))
         for comment in comments:
@@ -151,10 +163,9 @@ def delete_recipe(recipe_id):
 
         # Delete the comments
         mongo.db.comments.delete_many({"recipe_id": ObjectId(recipe_id)})
-
-        # Recalculate the user's points after deleting a recipe
         current_user.calculate_points()
 
+        logger.info(f"Recipe and associated comments deleted by user {current_user.username}: {recipe['title']}")
         flash('Recipe and associated comments deleted! Points have been updated.', 'success')
     else:
         flash('You do not have permission to delete this recipe.', 'danger')
@@ -162,6 +173,7 @@ def delete_recipe(recipe_id):
 
 @recipes_bp.route('/recipe/<recipe_id>', methods=['GET', 'POST'])
 def view_recipe(recipe_id):
+    """View a recipe's details, including comments, and allow users to add comments."""
     recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     if not recipe:
         return render_template('404.html'), 404
@@ -198,13 +210,14 @@ def view_recipe(recipe_id):
         if user and 'bookmarked_recipes' in user and ObjectId(recipe_id) in user['bookmarked_recipes']:
             is_bookmarked = True
 
-    bookmark_form = BookmarkForm()  # Initialize the bookmark form
+    bookmark_form = BookmarkForm()
 
     return render_template('view_recipe.html', recipe=recipe, comments=comments, form=form, bookmark_form=bookmark_form, is_bookmarked=is_bookmarked)
 
 @recipes_bp.route('/bookmark/<recipe_id>', methods=['POST'])
 @login_required
 def toggle_bookmark(recipe_id):
+    """Allow users to bookmark or unbookmark a recipe."""
     user_id = current_user.get_id()
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     
@@ -228,6 +241,7 @@ def toggle_bookmark(recipe_id):
 @recipes_bp.route('/bookmarks')
 @login_required
 def view_bookmarks():
+    """View a list of all recipes bookmarked by the current user."""
     user = mongo.db.users.find_one({"_id": ObjectId(current_user.get_id())})
     bookmarked_recipes = list(mongo.db.recipes.find({"_id": {"$in": user.get('bookmarked_recipes', [])}}))
             
@@ -239,6 +253,7 @@ def view_bookmarks():
 @recipes_bp.route('/delete_comment/<comment_id>', methods=['POST'])
 @login_required
 def delete_comment(comment_id):
+    """Allow the author or an admin to delete a comment."""
     comment = mongo.db.comments.find_one({"_id": ObjectId(comment_id)})
 
     if not comment:
