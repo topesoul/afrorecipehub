@@ -6,31 +6,31 @@
         <!-- Account Management Sidebar -->
         <div class="col-lg-4 mb-4">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header text-center text-white bg-primary">
                     <h4 class="mb-0">Account Management</h4>
                 </div>
                 <div class="card-body text-center">
                     <!-- Display user's profile image or default image if not available -->
                     <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'uploads/profile_images/user-image.jpg') }}" 
                          alt="{{ current_user.username }}'s Profile Image" class="profile-image">
-                    <h5 class="card-title">{{ current_user.username }}</h5>
-                    <h5 class="card-text text-success">
+                    <h5 class="card-title mt-3">{{ current_user.username }}</h5>
+                    <h5 class="card-text text-success mt-2">
                         <i class="fas fa-award" aria-hidden="true"></i> Points Balance: <span id="points-balance">Loading...</span>
                     </h5>
-                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mb-4" aria-label="Update profile image form">
+                    <form method="POST" action="{{ url_for('auth.update_profile') }}" enctype="multipart/form-data" class="mt-4">
                         {{ form.hidden_tag() }}
                         <div class="form-group">
                             <label for="profile_image" class="sr-only">Upload profile image</label>
-                            <input type="file" name="profile_image" id="profile_image" class="form-control-file mb-3">
+                            <input type="file" name="profile_image" id="profile_image" class="form-control-file">
                         </div>
-                        <div class="form-check mb-3">
+                        <div class="form-check mt-3">
                             <input type="checkbox" class="form-check-input" id="remove_image" name="remove_image">
                             <label class="form-check-label" for="remove_image">Remove Current Profile Image</label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Update Profile Image</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Update Profile Image</button>
                     </form>
-                    <a href="{{ url_for('auth.change_username', username=current_user.username) }}" class="btn btn-warning btn-block mb-2">Change Username</a>
-                    <a href="#" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-account-modal">Delete Account</a>
+                    <a href="{{ url_for('auth.change_username', username=current_user.username) }}" class="btn btn-warning btn-block mt-3">Change Username</a>
+                    <a href="#" class="btn btn-danger btn-block mt-3" data-toggle="modal" data-target="#delete-account-modal">Delete Account</a>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <!-- Main Content Area -->
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="mb-4">Welcome, {{ current_user.username }}</h1>
+                <h1>Welcome, {{ current_user.username }}</h1>
                 <div class="btn-group">
                     <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-success btn-lg">Add New Recipe</a>
                     <a href="{{ url_for('recipes.view_bookmarks') }}" class="btn btn-info btn-lg">View Bookmarks</a>
