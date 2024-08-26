@@ -37,9 +37,10 @@ class RegistrationForm(FlaskForm):
         """
         Custom validator to check if the username is already taken.
         """
-        user = mongo.db.users.find_one({"username": username.data})
+        stripped_username = username.data.strip().lower()  # Strip spaces and make case-insensitive
+        user = mongo.db.users.find_one({"username": stripped_username})
         if user:
-            raise ValidationError('That username is taken. Please choose a different one.')
+            raise ValidationError('That username is taken (case-insensitive). Please choose a different one.')
 
     def validate_email(self, email):
         """
@@ -89,9 +90,10 @@ class ChangeUsernameForm(FlaskForm):
         """
         Custom validator to check if the new username is already taken.
         """
-        user = mongo.db.users.find_one({"username": username.data})
+        stripped_username = username.data.strip().lower()  # Strip spaces and convert to lower case
+        user = mongo.db.users.find_one({"username": stripped_username})
         if user:
-            raise ValidationError('That username is taken. Please choose a different one.')
+            raise ValidationError('That username is taken (case-insensitive). Please choose a different one.')
 
 
 class ProfileUpdateForm(FlaskForm):
