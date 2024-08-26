@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="container text-center mt-5">
-    <h1>500</h1>
-    <p>Something went wrong on our end. Please try again later.</p>
-    <a href="{{ url_for('main.index') }}" class="btn btn-primary">Go Back Home</a>
+<div class="container text-center mt-5" role="alert" aria-labelledby="error-heading">
+    <h1 id="error-heading" class="display-1">500</h1>
+    <p class="lead">Something went wrong on our end. Please try again later.</p>
+    <p>We're working to fix the problem. In the meantime, you can return to the homepage or contact support if the issue persists.</p>
+    <a href="{{ url_for('main.index') }}" class="btn btn-primary" title="Go back to the homepage">Go Back Home</a>
 </div>
 {% endblock %}
