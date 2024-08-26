@@ -7,7 +7,7 @@
       <img
         src="{{ url_for('static', filename=recipe.image_path) }}"
         class="img-fluid rounded mb-4 view-recipe-image"
-        alt="{{ recipe.title }}"
+        alt="{{ recipe.title }} image"
       />
       {% endif %}
       <h1>{{ recipe.title }}</h1>
@@ -22,34 +22,36 @@
       <h3>Instructions</h3>
       <p>{{ recipe.instructions }}</p>
       <div class="mt-4">
-        {% if current_user.is_authenticated and (current_user.get_id() ==
-        recipe.created_by|string or session.get('is_admin')) %}
+        {% if current_user.is_authenticated and (current_user.get_id() == recipe.created_by|string or session.get('is_admin')) %}
         <a
           href="{{ url_for('recipes.edit_recipe', recipe_id=recipe._id|string) }}"
           class="btn btn-warning"
-          >Edit Recipe</a
-        >
+          aria-label="Edit {{ recipe.title }}"
+        >Edit Recipe</a>
         <button
           class="btn btn-danger"
           data-toggle="modal"
           data-target="#delete-modal"
           data-item-id="{{ recipe._id|string }}"
           data-item-type="recipe"
+          aria-label="Delete {{ recipe.title }}"
         >
           Delete Recipe
         </button>
-        {% endif %} {% if current_user.is_authenticated %}
+        {% endif %}
+        {% if current_user.is_authenticated %}
         <form
           method="POST"
           action="{{ url_for('recipes.toggle_bookmark', recipe_id=recipe._id|string) }}"
           class="d-inline-block"
         >
-          {{ bookmark_form.csrf_token }} {% if is_bookmarked %}
-          <button type="submit" class="btn btn-outline-danger">
+          {{ bookmark_form.csrf_token }}
+          {% if is_bookmarked %}
+          <button type="submit" class="btn btn-outline-danger" aria-label="Unbookmark {{ recipe.title }}">
             <i class="fas fa-bookmark"></i> Unbookmark
           </button>
           {% else %}
-          <button type="submit" class="btn btn-outline-primary">
+          <button type="submit" class="btn btn-outline-primary" aria-label="Bookmark {{ recipe.title }}">
             <i class="fas fa-bookmark"></i> Bookmark
           </button>
           {% endif %}
@@ -64,27 +66,26 @@
           <p>{{ comment.comment }}</p>
           <small class="text-muted">Posted by {{ comment.username }} on {{ comment.created_at.strftime('%Y-%m-%d') }}</small>
           {% if current_user.is_authenticated and (current_user.get_id() == comment.user_id|string or session.get('is_admin')) %}
-          <form method="POST" action="{{ url_for('recipes.delete_comment', comment_id=comment._id|string) }}" class="d-inline-block">
+          <form method="POST" action="{{ url_for('recipes.delete_comment', comment_id=comment._id|string) }}" class="d-inline-block" aria-label="Delete comment by {{ comment.username }}">
             {{ form.csrf_token }}
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>
           {% endif %}
         </div>
       </div>
-      {% endfor %} 
+      {% endfor %}
       {% if current_user.is_authenticated %}
-      <form method="POST">
+      <form method="POST" aria-label="Add a new comment">
         {{ form.hidden_tag() }}
         <div class="form-group">
-          {{ form.comment.label(class="form-label") }} {{
-          form.comment(class="form-control") }}
+          {{ form.comment.label(class="form-label") }}
+          {{ form.comment(class="form-control") }}
         </div>
         {{ form.submit(class="btn btn-primary") }}
       </form>
       {% else %}
       <p>
-        Please <a href="{{ url_for('auth.login') }}">log in</a> to leave a
-        comment.
+        Please <a href="{{ url_for('auth.login') }}">log in</a> to leave a comment.
       </p>
       {% endif %}
     </div>
