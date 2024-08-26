@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField, BooleanField, PasswordField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from recipehub import mongo
+from email_validator import validate_email, EmailNotValidError
 
 class RegistrationForm(FlaskForm):
     """
