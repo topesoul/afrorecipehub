@@ -6,31 +6,37 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h1 class="text-center mb-4">Add a New Recipe</h1>
-                <form class="card p-4 shadow-sm bg-light" method="POST" enctype="multipart/form-data" action="{{ url_for('recipes.add_recipe') }}">
+                <form class="card p-4 shadow-sm bg-light" method="POST" enctype="multipart/form-data" action="{{ url_for('recipes.add_recipe') }}" aria-label="Add a new recipe">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
                         <label for="title">Recipe Name:</label>
-                        {{ form.title(class="form-control", placeholder="Enter the name of your recipe") }}
+                        {{ form.title }}
+                        <small id="titleHelp" class="form-text text-muted">Provide a catchy name for your recipe.</small>
                     </div>
                     <div class="form-group">
                         <label for="description">Recipe Description:</label>
-                        {{ form.description(class="form-control", placeholder="Give a brief description of your recipe") }}
+                        {{ form.description }}
+                        <small id="descriptionHelp" class="form-text text-muted">Write a brief description of what makes this recipe special.</small>
                     </div>
                     <div class="form-group">
                         <label for="category">Category:</label>
-                        {{ form.category(class="form-control") }}
+                        {{ form.category }}
+                        <small id="categoryHelp" class="form-text text-muted">Select a category that best describes your recipe.</small>
                     </div>
                     <div class="form-group">
                         <label for="ingredients">Ingredients:</label>
-                        {{ form.ingredients(class="form-control", placeholder="List the ingredients required, one per line") }}
+                        {{ form.ingredients }}
+                        <small id="ingredientsHelp" class="form-text text-muted">List each ingredient on a new line.</small>
                     </div>
                     <div class="form-group">
                         <label for="instructions">Instructions:</label>
-                        {{ form.instructions(class="form-control", placeholder="Describe the steps to prepare the recipe") }}
+                        {{ form.instructions }}
+                        <small id="instructionsHelp" class="form-text text-muted">Provide detailed steps for preparing the recipe.</small>
                     </div>
                     <div class="form-group">
                         <label for="image">Upload Image:</label>
-                        <input type="file" class="form-control" name="image">
+                        {{ form.image }}
+                        <small id="imageHelp" class="form-text text-muted">Optional: Add an image to showcase your recipe.</small>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg mt-3">Submit Recipe</button>
