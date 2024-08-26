@@ -4,11 +4,12 @@
 {% block content %}
 <div class="auth-card">
     <h2>Register</h2>
-    <form method="POST" action="{{ url_for('auth.register') }}">
+    <form method="POST" action="{{ url_for('auth.register') }}" aria-label="Register a new account">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <label for="username">Username :</label>
-            {{ form.username(class="form-control", id="username") }}
+            <label for="username">Username:</label>
+            {{ form.username }}
+            <small id="usernameHelp" class="form-text text-muted">Choose a unique username for your account.</small>
             {% if form.username.errors %}
                 <small class="form-text text-danger">
                     {{ form.username.errors[0] }}
@@ -16,8 +17,9 @@
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="email">Email :</label>
-            {{ form.email(class="form-control", id="email") }}
+            <label for="email">Email:</label>
+            {{ form.email }}
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             {% if form.email.errors %}
                 <small class="form-text text-danger">
                     {{ form.email.errors[0] }}
@@ -25,8 +27,9 @@
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="password">Password :</label>
-            {{ form.password(class="form-control", id="password") }}
+            <label for="password">Password:</label>
+            {{ form.password }}
+            <small id="passwordHelp" class="form-text text-muted">Make sure your password is strong and secure.</small>
             {% if form.password.errors %}
                 <small class="form-text text-danger">
                     {{ form.password.errors[0] }}
@@ -34,8 +37,9 @@
             {% endif %}
         </div>
         <div class="form-group">
-            <label for="confirm_password">Confirm Password :</label>
-            {{ form.confirm_password(class="form-control", id="confirm_password") }}
+            <label for="confirm_password">Confirm Password:</label>
+            {{ form.confirm_password }}
+            <small id="confirmPasswordHelp" class="form-text text-muted">Confirm your password.</small>
             {% if form.confirm_password.errors %}
                 <small class="form-text text-danger">
                     {{ form.confirm_password.errors[0] }}
