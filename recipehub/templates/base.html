@@ -1,79 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AfroRecipeHub - Discover and share amazing African recipes.">
-    <meta name="keywords" content="African recipes, cooking, food, AfroRecipeHub">
-    <meta name="author" content="Temi Akingbala">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AfroRecipeHub - Discover and share amazing African recipes."
+    />
+    <meta
+      name="keywords"
+      content="African recipes, cooking, food, AfroRecipeHub"
+    />
+    <meta name="author" content="Temi Akingbala" />
     <title>AfroRecipeHub</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-</head>
-<body class="{% block body_class %}{% endblock %}" data-authenticated="{{ current_user.is_authenticated }}">
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{ url_for('main.index') }}" title="AfroRecipeHub Homepage">AfroRecipeHub</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <!-- CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+  </head>
+  <body
+    class="{% block body_class %}{% endblock %}"
+    data-authenticated="{{ current_user.is_authenticated }}"
+  >
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a
+        class="navbar-brand"
+        href="{{ url_for('main.index') }}"
+        title="AfroRecipeHub Homepage"
+        >AfroRecipeHub</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item {% if request.endpoint == 'main.index' %}active{% endif %}">
-                <a class="nav-link" href="{{ url_for('main.index') }}" title="Home Page">Home</a>
-            </li>
-            <li class="nav-item {% if request.endpoint == 'recipes.get_recipes' %}active{% endif %}">
-                <a class="nav-link" href="{{ url_for('recipes.get_recipes') }}" title="Explore Recipes">Recipes</a>
-            </li>
-            {% if current_user.is_authenticated %}
-                <li class="nav-item {% if request.endpoint == 'main.dashboard' %}active{% endif %}">
-                    <a class="nav-link" href="{{ url_for('main.dashboard', username=current_user.username) }}" title="Your Dashboard">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}" title="Log out of your account">Logout</a>
-                </li>
-            {% else %}
-                <li class="nav-item {% if request.endpoint == 'auth.register' %}active{% endif %}">
-                    <a class="nav-link" href="{{ url_for('auth.register') }}" title="Register a new account">Register</a>
-                </li>
-                <li class="nav-item {% if request.endpoint == 'auth.login' %}active{% endif %}">
-                    <a class="nav-link" href="{{ url_for('auth.login') }}" title="Login to your account">Login</a>
-                </li>
-            {% endif %}
+          <li
+            class="nav-item {% if request.endpoint == 'main.index' %}active{% endif %}"
+          >
+            <a
+              class="nav-link"
+              href="{{ url_for('main.index') }}"
+              title="Home Page"
+              >Home</a
+            >
+          </li>
+          <li
+            class="nav-item {% if request.endpoint == 'recipes.get_recipes' %}active{% endif %}"
+          >
+            <a
+              class="nav-link"
+              href="{{ url_for('recipes.get_recipes') }}"
+              title="Explore Recipes"
+              >Recipes</a
+            >
+          </li>
+          {% if current_user.is_authenticated %}
+          <li
+            class="nav-item {% if request.endpoint == 'main.dashboard' %}active{% endif %}"
+          >
+            <a
+              class="nav-link"
+              href="{{ url_for('main.dashboard', username=current_user.username) }}"
+              title="Your Dashboard"
+              >Dashboard</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{{ url_for('auth.logout') }}"
+              title="Log out of your account"
+              >Logout</a
+            >
+          </li>
+          {% else %}
+          <li
+            class="nav-item {% if request.endpoint == 'auth.register' %}active{% endif %}"
+          >
+            <a
+              class="nav-link"
+              href="{{ url_for('auth.register') }}"
+              title="Register a new account"
+              >Register</a
+            >
+          </li>
+          <li
+            class="nav-item {% if request.endpoint == 'auth.login' %}active{% endif %}"
+          >
+            <a
+              class="nav-link"
+              href="{{ url_for('auth.login') }}"
+              title="Login to your account"
+              >Login</a
+            >
+          </li>
+          {% endif %}
         </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </div>
-</nav>
 
-<!-- Content -->
-<div class="container mt-4">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-</div>
-
-<!-- Footer -->
-<footer class="bg-light text-center text-lg-start">
-    <div class="container p-4">
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start">
+      <div class="container p-4">
         <div class="text-center p-3">
-            &copy; 2024 AfroRecipeHub | Developed by: Temi Akingbala
+          &copy; 2024 AfroRecipeHub | Developed by: Temi Akingbala
         </div>
-    </div>
-</footer>
+      </div>
+    </footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" defer></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
-<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
-</body>
+    <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+      defer
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      defer
+    ></script>
+    <script
+      src="{{ url_for('static', filename='js/script.js') }}"
+      defer
+    ></script>
+  </body>
 </html>
