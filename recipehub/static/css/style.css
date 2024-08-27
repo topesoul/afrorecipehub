@@ -176,7 +176,7 @@ input, textarea, select {
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    color: var (--text-color);
+    color: var(--text-color); /* Corrected syntax */
 }
 
 input:focus, textarea:focus, select:focus {
