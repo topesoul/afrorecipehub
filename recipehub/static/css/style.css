@@ -1,603 +1,610 @@
 :root {
-    /* CSS Variables for colors */
-    --primary-color: #0056b3;
-    --primary-hover-color: #004494;
-    --text-color: #333;
-    --white: #fff;
-    --grey-light: #f9f9f9;
-    --grey-dark: #666;
-    --btn-warning-color: #ffcc00;
-    --btn-warning-hover-color: #e6b800;
-    --btn-danger-color: #dc3545;
-    --btn-danger-hover-color: #c82333;
-    --background-overlay-color: rgba(0, 0, 0, 0.7);
+  /* CSS Variables for colors */
+  --primary-color: #0056b3;
+  --primary-hover-color: #004494;
+  --text-color: #333;
+  --white: #fff;
+  --grey-light: #f9f9f9;
+  --grey-dark: #666;
+  --btn-warning-color: #ffcc00;
+  --btn-warning-hover-color: #e6b800;
+  --btn-danger-color: #dc3545;
+  --btn-danger-hover-color: #c82333;
+  --background-overlay-color: rgba(0, 0, 0, 0.7);
 }
 
 /* General Styling */
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--grey-light);
-    color: var(--text-color); /* Ensure text has sufficient contrast */
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--grey-light);
+  color: var(--text-color); /* Ensure text has sufficient contrast */
 }
 
 /* Background styling for login and register pages */
 .auth-page {
-    background-image: url('/static/images/home-page-background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    color: var(--text-color); /* Ensure text contrast on the background */
+  background-image: url("/static/images/home-page-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  color: var(--text-color); /* Ensure text contrast on the background */
 }
 
 .auth-card {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 350px;
-    margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
 }
 
 @media (max-width: 576px) {
-    .auth-card {
-        padding: 1rem;
-        max-width: 320px;
-    }
+  .auth-card {
+    padding: 1rem;
+    max-width: 320px;
+  }
 
-    .auth-page {
-        padding: 10px;
-    }
+  .auth-page {
+    padding: 10px;
+  }
 
-    .auth-card h1 {
-        font-size: 1.5rem;
-    }
+  .auth-card h1 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Header Styling */
 header {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.75rem 1rem;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Navbar Styling */
 nav.navbar {
-    background-color: var(--primary-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-    z-index: 1001; /* Ensures navbar is above other content */
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  z-index: 1001; /* Ensures navbar is above other content */
 }
 
 nav.navbar a.nav-link {
-    color: var(--white);
-    margin: 0 1rem;
-    text-decoration: none;
-    font-weight: 500;
-    white-space: nowrap;
+  color: var(--white);
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 /* Responsive Navbar */
 .navbar-toggler {
-    border: none;
-    background-color: var(--primary-hover-color);
-    padding: 0.5rem 1rem;
-    color: var(--white);
-    border-radius: 5px;
-    display: none;
-    width: 100%;
-    text-align: left;
-    z-index: 1002; /* Ensures toggle button is above other content */
+  border: none;
+  background-color: var(--primary-hover-color);
+  padding: 0.5rem 1rem;
+  color: var(--white);
+  border-radius: 5px;
+  display: none;
+  width: 100%;
+  text-align: left;
+  z-index: 1002; /* Ensures toggle button is above other content */
 }
 
 @media (max-width: 992px) {
-    .navbar-toggler {
-        display: block;
-    }
+  .navbar-toggler {
+    display: block;
+  }
 
-    .navbar-collapse {
-        display: none;
-        background-color: var(--grey-light);
-        width: 100%;
-        text-align: left;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.3s ease-out;
-    }
+  .navbar-collapse {
+    display: none;
+    background-color: var(--grey-light);
+    width: 100%;
+    text-align: left;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
 
-    .navbar-toggler.collapsed + .navbar-collapse {
-        display: flex;
-        max-height: 300px;
-        overflow-y: auto;
-    }
+  .navbar-toggler.collapsed + .navbar-collapse {
+    display: flex;
+    max-height: 300px;
+    overflow-y: auto;
+  }
 
-    nav.navbar a.nav-link {
-        margin: 0.5rem 1rem;
-        padding: 0.5rem;
-        width: 100%;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  nav.navbar a.nav-link {
+    margin: 0.5rem 1rem;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* Expand/Collapse Navbar Functionality */
 .navbar-toggler:focus + .navbar-collapse,
 .navbar-toggler:active + .navbar-collapse {
-    max-height: 300px;
+  max-height: 300px;
 }
 
 /* Main Content */
 main {
-    padding: 1rem;
+  padding: 1rem;
 }
 
-h1, h4 {
-    color: var(--text-color);
+h1,
+h4 {
+  color: var(--text-color);
 }
 
 /* Form Styling */
 form {
-    background-color: var(--white);
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-color);
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
 }
 
-input, textarea, select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: var(--text-color); /* Corrected syntax */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-color); /* Corrected syntax */
 }
 
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
 }
 
 /* General Button Styling */
 button {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    width: auto;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: auto;
 }
 
 button:hover {
-    background-color: var(--primary-hover-color);
+  background-color: var(--primary-hover-color);
 }
 
 a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
 }
 
 a:hover {
-    color: var(--primary-hover-color);
-    text-decoration: underline;
+  color: var(--primary-hover-color);
+  text-decoration: underline;
 }
 
 /* Recipe Card Styling */
 .recipe-card {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-radius: 15px;
-    overflow: hidden;
-    background-color: var(--white);
-    margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: var(--white);
+  margin-bottom: 20px;
 }
 
 .recipe-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .recipe-card img {
-    object-fit: cover;
-    width: 100%;
-    height: 250px;
-    border-radius: 15px 15px 0 0;
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+  border-radius: 15px 15px 0 0;
 }
 
 .recipe-card .card-body h5 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: var(--text-color);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
 }
 
 .recipe-card .card-body p {
-    color: var(--grey-dark);
+  color: var(--grey-dark);
 }
 
 .recipe-card .card-body .btn {
-    border-radius: 25px;
-    font-size: 0.875rem;
-    padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.5rem;
 }
 
 /* Footer Styling */
 footer {
-    background-color: var(--grey-light);
-    padding: 2rem 0;
-    text-align: center;
-    color: var(--grey-dark);
-    margin-top: 4rem;
-    border-top: 1px solid #ddd;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000; /* Ensure footer stays at the bottom */
+  background-color: var(--grey-light);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--grey-dark);
+  margin-top: 4rem;
+  border-top: 1px solid #ddd;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure footer stays at the bottom */
 }
 
 @media (max-width: 576px) {
-    footer {
-        padding: 1rem 0;
-    }
+  footer {
+    padding: 1rem 0;
+  }
 }
 
 /* Hero Section */
 #hero-section {
-    background-image: url('/static/images/new-hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 100px 0;
-    color: var(--white);
-    position: relative;
-    text-shadow: 2px 2px 4px var(--background-overlay-color);
+  background-image: url("/static/images/new-hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: var(--white);
+  position: relative;
+  text-shadow: 2px 2px 4px var(--background-overlay-color);
 }
 
 .hero-overlay {
-    background-color: var(--background-overlay-color);
-    padding: 50px;
-    border-radius: 10px;
-    display: inline-block;
-    width: 100%;
+  background-color: var(--background-overlay-color);
+  padding: 50px;
+  border-radius: 10px;
+  display: inline-block;
+  width: 100%;
 }
 
-#hero-section h1, #hero-section p {
-    color: var(--white);
-    text-shadow: 2px 2px 4px var(--background-overlay-color);
+#hero-section h1,
+#hero-section p {
+  color: var(--white);
+  text-shadow: 2px 2px 4px var(--background-overlay-color);
 }
 
 #hero-section h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-    word-wrap: break-word;
-    text-align: center;
-    margin-bottom: 1rem;
+  font-size: 3rem;
+  line-height: 1.2;
+  word-wrap: break-word;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
-    #hero-section h1 {
-        font-size: 2.5rem;
-    }
+  #hero-section h1 {
+    font-size: 2.5rem;
+  }
 }
 
 @media (max-width: 576px) {
-    #hero-section h1 {
-        font-size: 2rem;
-    }
+  #hero-section h1 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 400px) {
-    #hero-section h1 {
-        font-size: 1.8rem;
-    }
+  #hero-section h1 {
+    font-size: 1.8rem;
+  }
 }
 
 /* Button Styles */
-.btn-outline-primary, .btn-outline-danger {
-    border-width: 2px;
+.btn-outline-primary,
+.btn-outline-danger {
+  border-width: 2px;
 }
 
-.btn-outline-primary:hover, .btn-outline-danger:hover {
-    background-color: #f8f9fa;
-    color: var(--primary-color);
+.btn-outline-primary:hover,
+.btn-outline-danger:hover {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
 }
 
 .btn-warning {
-    background-color: var(--btn-warning-color);
-    color: var(--text-color);
+  background-color: var(--btn-warning-color);
+  color: var(--text-color);
 }
 
 .btn-warning:hover {
-    background-color: var(--btn-warning-hover-color);
-    color: #000;
+  background-color: var(--btn-warning-hover-color);
+  color: #000;
 }
 
 .btn-danger {
-    background-color: var(--btn-danger-color);
-    color: var(--white);
+  background-color: var(--btn-danger-color);
+  color: var(--white);
 }
 
 .btn-danger:hover {
-    background-color: var(--btn-danger-hover-color);
+  background-color: var(--btn-danger-hover-color);
 }
 
 /* Modal Button Styling */
 .modal-footer .btn {
-    border-radius: 5px;
-    padding: 0.5rem 1.25rem;
-    font-size: 1rem;
-    width: auto;
+  border-radius: 5px;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  width: auto;
 }
 
 .modal-footer .btn-secondary {
-    background-color: #6c757d;
-    border: none;
+  background-color: #6c757d;
+  border: none;
 }
 
 .modal-footer .btn-secondary:hover {
-    background-color: #5a6268;
+  background-color: #5a6268;
 }
 
 .modal-footer .btn-danger {
-    background-color: var(--btn-danger-color);
-    border: none;
+  background-color: var(--btn-danger-color);
+  border: none;
 }
 
 .modal-footer .btn-danger:hover {
-    background-color: var(--btn-danger-hover-color);
+  background-color: var(--btn-danger-hover-color);
 }
 
 /* Adjust edit and delete buttons to match in shape and size */
 .btn-group .btn {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .btn-group .btn:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 /* Add styling for Add Recipe Page with background image */
 .add-recipe-page {
-    background-image: url('/static/images/home-page-background.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 100px 0;
-    color: var(--white);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+  background-image: url("/static/images/home-page-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 100px 0;
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .add-recipe-page .card {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .add-recipe-page h1 {
-    color: var(--white);
+  color: var(--white);
 }
 
 .add-recipe-page label {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .add-recipe-page .form-control {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .add-recipe-page button {
-    background-color: var(--primary-color);
-    color: var(--white);
-    width: 100%;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin-top: 10px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  width: 100%;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 10px;
 }
 
 .add-recipe-page button:hover {
-    background-color: var(--primary-hover-color);
+  background-color: var(--primary-hover-color);
 }
 
 /* Background styling for the Change Username page */
 .change-username-page {
-    background-image: url('/static/images/new-hero-bg.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 100px 0;
-    color: var(--white);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+  background-image: url("/static/images/new-hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 100px 0;
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .change-username-page .card {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .change-username-page h1 {
-    color: var(--white);
+  color: var(--white);
 }
 
 .change-username-page label {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .change-username-page .form-control {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .change-username-page button {
-    background-color: var(--primary-color);
-    color: var(--white);
-    width: 100%;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin-top: 10px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  width: 100%;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 10px;
 }
 
 .change-username-page button:hover {
-    background-color: var(--primary-hover-color);
+  background-color: var(--primary-hover-color);
 }
 
 /* Text Center Styling */
 .text-center {
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 /* Profile Image Styling */
 .profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Profile Image Remover Checkbox Styling */
 .form-check-input {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
 }
-  
+
 .form-check-input:checked {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 /* Responsive Navbar and Footer Styling */
 @media (max-width: 768px) {
-    header {
-        padding: 0.5rem;
-    }
+  header {
+    padding: 0.5rem;
+  }
 
-    footer {
-        padding: 1rem 0;
-    }
+  footer {
+    padding: 1rem 0;
+  }
 
-    nav.navbar a.nav-link {
-        margin: 0.5rem 0;
-        display: block;
-    }
+  nav.navbar a.nav-link {
+    margin: 0.5rem 0;
+    display: block;
+  }
 
-    .auth-card {
-        padding: 1.5rem;
-        margin: 1rem;
-    }
+  .auth-card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
 
-    #hero-section h1 {
-        font-size: 2rem;
-    }
+  #hero-section h1 {
+    font-size: 2rem;
+  }
 }
 
 /* Extra Small Devices (Portrait Tablets and Large Phones, 576px and down) */
 @media (max-width: 576px) {
+  .navbar-toggler {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: left;
+  }
 
-    .navbar-toggler {
-        padding: 0.5rem 1rem;
-        width: 100%;
-        text-align: left;
-    }
+  .navbar-collapse {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
-    .navbar-collapse {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        max-height: none;
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+  nav.navbar a.nav-link {
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-    nav.navbar a.nav-link {
-        margin: 0.5rem 0;
-        padding: 0.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  footer {
+    padding: 0.5rem 0;
+  }
 
-    footer {
-        padding: 0.5rem 0;
-    }
+  #hero-section h1 {
+    font-size: 1.8rem;
+  }
 
-    #hero-section h1 {
-        font-size: 1.8rem;
-    }
+  /* Adjust buttons on mobile devices to stack vertically */
+  .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
 
-    /* Adjust buttons on mobile devices to stack vertically */
-    .btn-group {
-        flex-direction: column;
-        width: 100%;
-    }
+  .btn-group .btn {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
 
-    .btn-group .btn {
-        margin-bottom: 0.5rem;
-        width: 100%;
-    }
+  .btn-group .btn:last-child {
+    margin-bottom: 0;
+  }
 
-    .btn-group .btn:last-child {
-        margin-bottom: 0;
-    }
+  /* Adjust buttons in cards on mobile devices */
+  .card-footer .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 
-    /* Adjust buttons in cards on mobile devices */
-    .card-footer .btn {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-    
-    .card-footer .btn:last-child {
-        margin-bottom: 0;
-    }
+  .card-footer .btn:last-child {
+    margin-bottom: 0;
+  }
 
-    /* Adjust buttons on view recipe page */
-    .view-recipe-page .btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
+  /* Adjust buttons on view recipe page */
+  .view-recipe-page .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 
-    .view-recipe-page .btn:last-child {
-        margin-bottom: 0;
-    }
+  .view-recipe-page .btn:last-child {
+    margin-bottom: 0;
+  }
 }
