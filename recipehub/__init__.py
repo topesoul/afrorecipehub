@@ -10,10 +10,12 @@ from bson import ObjectId
 if os.path.exists("env.py"):
     import env
 
-# Initialize the Flask app and extensions
-mongo = None
-bcrypt = None
-login_manager = None
+# Initialize extensions without app context
+mongo = PyMongo()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+csrf = CSRFProtect()
+
 
 def create_app():
     """
@@ -25,24 +27,23 @@ def create_app():
     """
     app = Flask(
         __name__,
-        static_folder='static',  # Specify the folder for static files
-        static_url_path='/static'  # Specify the URL path for serving static files
+        static_folder='static',
+        static_url_path='/static'
     )
 
-    # Configure the app with secret key and MongoDB URI from environment variables
+    # Configure the app with secret key and MongoDB URI
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
     # Initialize extensions with the Flask app
-    global mongo, bcrypt, login_manager
-    mongo = PyMongo(app)
-    bcrypt = Bcrypt(app)
-    login_manager = LoginManager(app)
-    csrf = CSRFProtect(app)
+    mongo.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    csrf.init_app(app)
 
     # Configure LoginManager
-    login_manager.login_view = "auth.login"  # Redirects to login page if user is not logged in
-    login_manager.login_message_category = "info"  # Flash message category for login
+    login_manager.login_view = "auth.login"
+    login_manager.login_message_category = "info"
 
     # User Loader for Flask-Login
     from recipehub.models import User  # Import the User class from models
@@ -63,7 +64,8 @@ def create_app():
             return User(
                 user_id=str(user_data["_id"]),
                 username=user_data["username"],
-                profile_image=user_data.get("profile_image", "uploads/profile_images/user-image.jpg"),
+                profile_image=user_data.get(
+                    "profile_image", "uploads/profile_images/user-image.jpg"),
                 points=user_data.get("points")
             )
         return None
@@ -73,6 +75,7 @@ def create_app():
     from recipehub.recipes import recipes_bp
     from recipehub.auth import auth_bp
     from recipehub.api import api_bp
+
     app.register_blueprint(main_bp)
     app.register_blueprint(recipes_bp)
     app.register_blueprint(auth_bp)
