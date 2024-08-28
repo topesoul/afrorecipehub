@@ -9,6 +9,7 @@ from pymongo.errors import PyMongoError
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class User(UserMixin):
     def __init__(self, user_id, username, profile_image=None, points=None):
         """
@@ -21,14 +22,17 @@ class User(UserMixin):
         """
         self.id = user_id
         self.username = username
-        self.profile_image = profile_image if profile_image else "uploads/profile_images/user-image.jpg"
-        self._points = points  # Points are set if provided, otherwise, they are lazy-loaded
+        self.profile_image = (
+            profile_image
+            if profile_image else "uploads/profile_images/user-image.jpg"
+        )
+        # Points are set if provided, otherwise, they are lazy-loaded
+        self._points = points
 
     @property
     def points(self):
         """
         Property to access user's points. Recalculates if necessary.
-        
         :return: User's points.
         """
         if self._points is None:
@@ -37,13 +41,18 @@ class User(UserMixin):
 
     def calculate_points(self):
         """
-        Calculate the user's points based on the number of recipes and comments they have created.
+        Calculate the user's points based on the number of recipes and comments
+        they have created.
 
         :return: Calculated points.
         """
         try:
-            recipes_count = mongo.db.recipes.count_documents({"created_by": ObjectId(self.id)})
-            comments_count = mongo.db.comments.count_documents({"user_id": ObjectId(self.id)})
+            recipes_count = mongo.db.recipes.count_documents(
+                {"created_by": ObjectId(self.id)}
+            )
+            comments_count = mongo.db.comments.count_documents(
+                {"user_id": ObjectId(self.id)}
+            )
             points = (recipes_count * 10) + (comments_count * 2)
 
             # Update the points in the database
@@ -55,21 +64,30 @@ class User(UserMixin):
             self._points = points  # Cache the calculated points
             return points
         except PyMongoError as e:
-            logger.error(f"An error occurred while calculating points for user {self.id}: {e}")
+            logger.error(
+                f"An error occurred while calculating points for user "
+                f"{self.id}: {e}"
+            )
             return 0  # Return 0 points if an error occurs
 
     @staticmethod
     def calculate_points_static(user_id):
         """
-        Calculate the user's points based on the number of recipes and comments they have created.
-        This method is static and does not require an instance of the User class.
+        Calculate the user's points based on the number of recipes and comments
+        they have created.
+        This method is static and does not require an instance
+        of the User class.
 
         :param user_id: The user's ID.
         :return: Calculated points.
         """
         try:
-            recipes_count = mongo.db.recipes.count_documents({"created_by": ObjectId(user_id)})
-            comments_count = mongo.db.comments.count_documents({"user_id": ObjectId(user_id)})
+            recipes_count = mongo.db.recipes.count_documents(
+                {"created_by": ObjectId(user_id)}
+            )
+            comments_count = mongo.db.comments.count_documents(
+                {"user_id": ObjectId(user_id)}
+            )
             points = (recipes_count * 10) + (comments_count * 2)
 
             # Update the points in the database
@@ -80,7 +98,10 @@ class User(UserMixin):
 
             return points
         except PyMongoError as e:
-            logger.error(f"An error occurred while calculating points for user {user_id}: {e}")
+            logger.error(
+                f"An error occurred while calculating points for user "
+                f"{user_id}: {e}"
+            )
             return 0  # Return 0 points if an error occurs
 
     @staticmethod
@@ -102,7 +123,9 @@ class User(UserMixin):
                 )
             return None
         except PyMongoError as e:
-            logger.error(f"An error occurred while retrieving user by ID {user_id}: {e}")
+            logger.error(
+                f"An error occurred while retrieving user by ID {user_id}: {e}"
+            )
             return None
 
     @staticmethod
@@ -124,5 +147,8 @@ class User(UserMixin):
                 )
             return None
         except PyMongoError as e:
-            logger.error(f"An error occurred while retrieving user by username {username}: {e}")
+            logger.error(
+                f"An error occurred while retrieving user by username "
+                f"{username}: {e}"
+            )
             return None
