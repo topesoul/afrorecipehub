@@ -22,7 +22,7 @@ body {
   color: var(--text-color); /* Ensure text has sufficient contrast */
 }
 
-/* Background styling for login and register pages */
+/* Background styling for login and register pages with overlay */
 .auth-page {
   background-image: url("/static/images/home-page-background.jpg");
   background-size: cover;
@@ -33,9 +33,23 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  position: relative;
   color: var(--text-color); /* Ensure text contrast on the background */
 }
 
+/* Add a semi-transparent overlay to tint the background */
+.auth-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity to tint the background */
+  z-index: 1;
+}
+
+/* Ensure the card is above the overlay */
 .auth-card {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 1.5rem;
@@ -44,6 +58,8 @@ body {
   width: 100%;
   max-width: 350px;
   margin: 0 auto;
+  z-index: 2; /* Place the card above the overlay */
+  position: relative;
 }
 
 @media (max-width: 576px) {
@@ -74,9 +90,36 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Navbar Logo Styling */
 .navbar-logo {
-  height: 40px;
-  margin-right: 10px;
+  height: 60px; /* Increase the height for better visibility */
+  margin-right: 15px; /* Adjust spacing between logo and text */
+}
+
+.navbar-brand {
+  font-size: 1.75rem; /* Increase font size of the brand name */
+  font-weight: bold; /* Make the brand name bold */
+  display: flex;
+  align-items: center; /* Align the logo and brand name vertically */
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.1rem; /* Slightly increase the font size of the nav links */
+  padding: 10px 15px; /* Add more padding for a spacious look */
+}
+
+@media (max-width: 576px) {
+  .navbar-logo {
+    height: 50px; /* Adjust logo size on smaller screens */
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem; /* Adjust brand name size on smaller screens */
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 1rem; /* Adjust nav link size on smaller screens */
+  }
 }
 
 /* Navbar Styling */
@@ -281,9 +324,9 @@ footer {
 }
 
 .footer-logo img {
-  width: 80px; /* Adjust size as needed */
+  width: 80px;  /* Adjust size as needed */
   height: 80px; /* Adjust size as needed */
-  margin-bottom: 10px; /* Space between logo and text */
+  margin-bottom: 10px;  /* Space between logo and text */
 }
 
 .footer-text p {
@@ -415,8 +458,8 @@ footer {
   margin-right: 0;
 }
 
-/* Add styling for Add Recipe Page with background image */
-.add-recipe-page {
+/* Shared styling for Add and Edit Recipe Pages */
+.recipe-page {
   background-image: url("/static/images/home-page-background.jpg");
   background-size: cover;
   background-position: center;
@@ -428,27 +471,49 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: relative;
 }
 
-.add-recipe-page .card {
+/* Add a semi-transparent overlay behind the title */
+.recipe-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1;
+}
+
+.recipe-page h1 {
+  color: var(--white);
+  font-size: 3rem; /* Increase the font size for better visibility */
+  font-weight: bold; 
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Add shadow for contrast */
+  z-index: 2; /* Ensure the text is above the overlay */
+  position: relative;
+  margin-bottom: 1.5rem; /* Add margin below the title */
+}
+
+/* Ensure the form is above the overlay */
+.recipe-page .card {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  position: relative;
 }
 
-.add-recipe-page h1 {
-  color: var(--white);
-}
-
-.add-recipe-page label {
+.recipe-page label {
   color: var(--text-color);
 }
 
-.add-recipe-page .form-control {
+.recipe-page .form-control {
   background-color: #f8f9fa;
 }
 
-.add-recipe-page button {
+.recipe-page button {
   background-color: var(--primary-color);
   color: var(--white);
   width: 100%;
@@ -458,7 +523,7 @@ footer {
   margin-top: 10px;
 }
 
-.add-recipe-page button:hover {
+.recipe-page button:hover {
   background-color: var(--primary-hover-color);
 }
 
@@ -631,3 +696,4 @@ footer {
     margin-bottom: 0;
   }
 }
+
