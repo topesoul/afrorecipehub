@@ -1,0 +1,107 @@
+
+# AfroRecipeHub Testing Documentation
+
+This document outlines the testing procedures, validation, known issues, and resolutions for the AfroRecipeHub project.
+
+## Table of Contents
+
+- [Manual Testing](#manual-testing)
+- [Automated Testing](#automated-testing)
+- [Validation](#validation)
+- [Known Issues and Resolutions](#known-issues-and-resolutions)
+- [Cross-Browser Testing](#cross-browser-testing)
+- [Responsiveness Testing](#responsiveness-testing)
+- [Additional Testing Information](#additional-testing-information)
+
+## Manual Testing
+
+### Test Cases
+
+| **Feature**             | **Test Case**                                                        | **Expected Outcome**                                                | **Result**   |
+|-------------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|--------------|
+| **Navigation Bar**      | Ensure all links work and lead to the correct pages.                 | Links should direct to appropriate pages, and navigation should be smooth. | Passed       |
+| **User Registration**   | Test user registration with valid and invalid data.                  | Registration should succeed with valid data and fail with invalid data. | Passed       |
+| **User Login**          | Test user login with correct and incorrect credentials.              | Login should succeed with correct credentials and fail with incorrect ones. | Passed       |
+| **Recipe Management**   | Test adding, editing, and deleting recipes.                          | Recipes should be added, edited, and deleted correctly, and changes should be reflected in the database. | Passed       |
+| **Commenting System**   | Test adding and deleting comments on recipes.                        | Comments should appear under the relevant recipes, and deleted comments should be removed from the UI and database. | Passed       |
+| **Bookmarking**         | Test bookmarking and unbookmarking recipes.                          | Bookmarked recipes should be added to the user's dashboard, and unbookmarked recipes should be removed. | Passed       |
+| **Admin Panel**         | Test admin functions for managing users, recipes, and comments.      | Admin should be able to manage all user-generated content and users themselves. | Passed       |
+| **Profile Management**  | Test updating profile details and uploading profile images.          | Profile details should update correctly, and images should replace previous ones. | Passed       |
+| **Gamification System** | Test point allocation for creating recipes and leaving comments.     | Points should be awarded for actions like creating recipes and leaving comments. | Passed       |
+
+## Automated Testing (Future Goal)
+
+Currently, the project does not include automated testing. Future versions may implement unit tests using Python's `unittest` or `pytest` frameworks.
+
+## Validation
+
+### HTML Validation
+
+All HTML files were validated using the W3C Markup Validation Service. No major errors or warnings were found.
+
+### CSS Validation
+
+All CSS files were validated using the W3C CSS Validation Service. No major errors or warnings were found.
+
+### JavaScript Validation
+
+JavaScript files were validated using JSHint. Minor warnings were addressed, and no major issues were found.
+
+### Python Code Validation
+
+Python code was validated using PEP8 standards. The following issues were identified and addressed:
+
+- **Line length**: Some lines exceeded 79 characters and were refactored.
+- **Blank line warnings**: Added or removed blank lines as necessary to comply with PEP8.
+
+## Known Issues and Resolutions
+
+### Responsive Design Issues
+
+- **Issue**: Some UI elements were not fully responsive on smaller screens.
+- **Resolution**: Applied media queries to adjust layouts and padding for smaller screen sizes.
+
+### CSRF Token Handling
+
+- **Issue**: Some forms were missing CSRF tokens, causing submission failures.
+- **Resolution**: Ensured all forms include CSRF tokens, particularly those created dynamically.
+
+### Session Management
+
+- **Issue**: Session expiration was not handled properly in some cases.
+- **Resolution**: Implemented proper session expiration handling and auto-logout for inactive sessions.
+
+## Cross-Browser Testing
+
+AfroRecipeHub was tested on the following browsers:
+
+- **Google Chrome**: Passed
+- **Mozilla Firefox**: Passed
+- **Safari**: Passed
+- **Microsoft Edge**: Passed
+
+No cross-browser compatibility issues were identified.
+
+## Responsiveness Testing
+
+The platform was tested on various devices to ensure responsiveness:
+
+- **Desktop**: Passed
+- **Laptop**: Passed
+- **Tablet**: Passed
+- **Smartphone**: Passed
+
+All UI elements adjusted correctly across different screen sizes.
+
+## Additional Testing Information
+
+### Performance Testing
+
+Basic performance testing was conducted to ensure the platform loads efficiently. The following optimizations were made:
+
+- **Image Optimization**: All images were compressed to reduce load times.
+- **Database Indexing**: Indexed key fields in MongoDB to speed up query times.
+
+## Conclusion
+
+AfroRecipeHub has undergone extensive testing to ensure it meets the requirements for functionality, responsiveness, and security. All identified issues have been resolved, and the platform is fully operational across multiple devices and browsers.
