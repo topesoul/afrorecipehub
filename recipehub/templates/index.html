@@ -1,111 +1,113 @@
-{% extends "base.html" %} {% block content %}
-<div id="hero-section">
-  <div class="hero-overlay">
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Hero Section with Integrated Gamification and Stats -->
+<div id="hero-section" class="text-white text-center">
+  <div class="hero-overlay d-flex align-items-center justify-content-center">
     <div class="container">
-      <h1 class="display-4">Welcome to AfroRecipeHub</h1>
-      <p>
-        Your gateway to authentic African cuisine from the comfort of your home.
+      <h1 class="display-3 font-weight-bold mb-3">Welcome to AfroRecipeHub!</h1>
+      <p class="lead mb-4">
+        Your ultimate destination for discovering and sharing authentic African recipes. Connect with a vibrant community that celebrates the rich culinary traditions of Africa.
+      </p>
+      <p class="lead mb-4">
+        <strong>{{ recipes|length }}</strong> delicious recipes, <strong>{{ registered_users }}</strong> passionate members, and countless culinary inspirations are waiting for you!
       </p>
       {% if current_user.is_authenticated %}
-      <a
-        href="{{ url_for('recipes.add_recipe') }}"
-        class="btn btn-lg btn-primary mt-4"
-        >Share a New Recipe</a
-      >
+      <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-lg btn-primary mt-4">
+        Share Your Recipe and Earn Points
+      </a>
       {% else %}
-      <a
-        href="{{ url_for('auth.register') }}"
-        class="btn btn-lg btn-primary mt-4"
-        >Join the Community</a
-      >
+      <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-primary mt-4">
+        Join the Community
+      </a>
       {% endif %}
     </div>
   </div>
 </div>
 
+<!-- User-Specific Content or Call to Action for Guests -->
 <div class="container">
   {% if current_user.is_authenticated %}
   <section id="user-welcome" class="text-center my-5">
-    <h2>Hello, {{ current_user.username }}!</h2>
+    <h2>Welcome Back, {{ current_user.username }}!</h2>
     <p class="lead">
-      Ready to share your newest African dish? Begin your culinary adventure
-      now!
+      Ready to share your newest African dish? Begin your culinary adventure now!
     </p>
-    <a
-      href="{{ url_for('recipes.add_recipe') }}"
-      class="btn btn-outline-primary btn-lg mt-3"
-      >Create a New Recipe</a
-    >
+    <a href="{{ url_for('recipes.add_recipe') }}" class="btn btn-outline-primary btn-lg mt-3">
+      Create a New Recipe and Gain More Points
+    </a>
     <p class="mt-3">
-      Explore the latest recipes from our community or check your own creations
-      <a href="{{ url_for('main.dashboard', username=current_user.username) }}"
-        >here!</a
-      >
+      Keep up the momentum! Explore the latest recipes from our community or check your own creations <a href="{{ url_for('main.dashboard', username=current_user.username) }}">here</a>.
     </p>
   </section>
   {% else %}
+  <!-- Call to Action for Guest Users with Gamification Appeal -->
   <section id="intro-section" class="text-center my-5">
     <h2>Looking for Authentic African Recipes?</h2>
     <p class="lead">
-      Or perhaps you have a unique creation to share with the world? Join
-      AfroRecipeHub today!
+      Or perhaps you have a unique creation to share with the world? Join AfroRecipeHub today!
     </p>
-    <a
-      href="{{ url_for('auth.register') }}"
-      class="btn btn-outline-primary btn-lg mt-3"
-      >Sign Up Now</a
-    >
+    <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg mt-3">
+      Sign Up Now and Start Earning Points
+    </a>
     <p class="mt-3">
-      Create a free account to share your recipes and guess what? Enjoy lots of
-      fun as you gain points while at it!!!.
-      <a href="{{ url_for('auth.register') }}">Join us now!</a>
+      Create a free account to share your recipes, leave comments, and guess what? Enjoy lots of fun as you gain points and climb the ranks of our vibrant community! <a href="{{ url_for('auth.register') }}">Join us now!</a>
     </p>
+  </section>
+
+  <!-- Community Growth Stats with Gamification Focus -->
+  <section id="community-stats" class="text-center my-5 bg-light py-5">
+    <h2>Be Part of Something Deliciously Exciting!</h2>
+    <p class="lead">
+      Thousands of food enthusiasts are already part of our rapidly growing community.
+    </p>
+    <p class="lead">
+      With <strong>{{ recipes|length }}</strong> mouth-watering African recipes and over <strong>{{ registered_users }}</strong> members sharing their culinary masterpieces, you're in for an amazing, rewarding experience!
+    </p>
+    <p class="lead">
+      Don’t miss out – Sign up now, start contributing, and earn points as you share your love for African cuisine with the world.
+    </p>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-primary mt-4">
+      Get Started and Earn Your First Points
+    </a>
   </section>
   {% endif %}
 </div>
 
+<!-- Visual Divider with Themed Image -->
 <div id="image-divider" class="text-center my-5">
-  <img
-    src="{{ url_for('static', filename='images/home-page-background.jpg') }}"
-    class="img-fluid"
-    alt="African Cuisine"
-  />
+  <img src="{{ url_for('static', filename='images/home-page-background.jpg') }}" class="img-fluid" alt="African Cuisine" />
 </div>
 
+<!-- Info Section Highlighting Platform Features -->
 <div class="container">
   <section id="info-section" class="row text-center my-5">
     <div class="col-md-4">
       <i class="fas fa-utensils fa-3x text-primary mb-3"></i>
       <h4>Discover African Cuisine</h4>
       <p>
-        African cuisine offers a rich tapestry of flavors, ingredients, and
-        cooking techniques. Each region has its own unique culinary traditions
-        that reflect the diverse cultures of the continent.
+        African cuisine offers a rich tapestry of flavors, ingredients, and cooking techniques. Each region has its own unique culinary traditions that reflect the diverse cultures of the continent.
       </p>
     </div>
     <div class="col-md-4">
       <i class="fas fa-concierge-bell fa-3x text-primary mb-3"></i>
       <h4>Essential Tools for African Cooking</h4>
       <p>
-        Traditional African cooking often uses specific tools like a mortar and
-        pestle or clay pots, but many recipes can be adapted to modern kitchen
-        equipment. Having the right tools enhances authenticity and ease of
-        preparation.
+        Traditional African cooking often uses specific tools like a mortar and pestle or clay pots, but many recipes can be adapted to modern kitchen equipment. Having the right tools enhances authenticity and ease of preparation.
       </p>
     </div>
     <div class="col-md-4">
       <i class="fas fa-book-open fa-3x text-primary mb-3"></i>
       <h4>Excited to Cook African Dishes?</h4>
       <p>
-        Explore our wide collection of African recipes and find your next
-        favorite dish.
+        Explore our wide collection of African recipes and find your next favorite dish.
       </p>
-      <a
-        href="{{ url_for('recipes.get_recipes') }}"
-        class="btn btn-outline-primary mt-3"
-        >Explore Recipes</a
-      >
+      <a href="{{ url_for('recipes.get_recipes') }}" class="btn btn-outline-primary mt-3">
+        Explore Recipes
+      </a>
     </div>
   </section>
 </div>
+
 {% endblock %}
