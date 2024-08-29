@@ -74,6 +74,11 @@ header {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.navbar-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
 /* Navbar Styling */
 nav.navbar {
   background-color: var(--primary-color);
@@ -259,7 +264,6 @@ a:hover {
 footer {
   background-color: var(--grey-light);
   padding: 2rem 0;
-  text-align: center;
   color: var(--grey-dark);
   margin-top: 4rem;
   border-top: 1px solid #ddd;
@@ -269,9 +273,28 @@ footer {
   z-index: 1000; /* Ensure footer stays at the bottom */
 }
 
-@media (max-width: 576px) {
-  footer {
-    padding: 1rem 0;
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Align items in column */
+}
+
+.footer-logo img {
+  width: 80px; /* Adjust size as needed */
+  height: 80px; /* Adjust size as needed */
+  margin-bottom: 10px; /* Space between logo and text */
+}
+
+.footer-text p {
+  margin: 0;
+  font-size: 16px; /* Adjust font size for better readability */
+  color: var(--grey-dark);
+}
+
+@media (min-width: 576px) {
+  .footer-content {
+    flex-direction: row; /* Align items in row on larger screens */
   }
 }
 
