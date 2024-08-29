@@ -38,8 +38,14 @@
         class="navbar-brand"
         href="{{ url_for('main.index') }}"
         title="AfroRecipeHub Homepage"
-        >AfroRecipeHub</a
       >
+        <img
+          src="{{ url_for('static', filename='images/logo.png') }}"
+          alt="AfroRecipeHub Logo"
+          class="navbar-logo"
+        />
+        AfroRecipeHub
+      </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -143,7 +149,15 @@
     <footer class="bg-light text-center text-lg-start">
       <div class="container p-4">
         <div class="text-center p-3">
-          &copy; 2024 AfroRecipeHub | Developed by: Temi Akingbala
+          <div class="footer-logo">
+            <img
+              src="{{ url_for('static', filename='images/logo.png') }}"
+              alt="AfroRecipeHub Logo"
+            />
+          </div>
+          <p class="footer-text">
+            © 2024 AfroRecipeHub | Developed by: Temitope Akingbala
+          </p>
         </div>
       </div>
     </footer>
