@@ -6,7 +6,6 @@ from recipehub.forms import ProfileUpdateForm
 from recipehub import mongo
 from bson.objectid import ObjectId
 
-
 # Blueprint for the main routes
 bp = Blueprint('main', __name__)
 
@@ -15,9 +14,20 @@ bp = Blueprint('main', __name__)
 @bp.route('/index')
 def index():
     """
-    Route to serve the homepage.
+    Route to serve the homepage with site statistics.
     """
-    return render_template('index.html')
+    # Get the count of registered users
+    registered_users = mongo.db.users.count_documents({})
+
+    # Retrieve all recipes
+    recipes = list(mongo.db.recipes.find())
+
+    # Render the index template with the statistics
+    return render_template(
+        'index.html',
+        recipes=recipes,
+        registered_users=registered_users
+    )
 
 
 @bp.route('/dashboard/<username>', methods=['GET', 'POST'])
