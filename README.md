@@ -22,6 +22,7 @@ This project was developed as part of the L5 Diploma in Web Application Developm
 - [Technologies Used](#technologies-used)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
+- [Database Structure](#database-structure)
 - [Security Features](#security-features)
 - [API Integration](#api-integration)
 - [Testing](#testing)
@@ -93,9 +94,16 @@ Content within AfroRecipeHub is carefully structured to enhance usability and en
 ### Site Map
 
 1. **Home Page**: Introduction to AfroRecipeHub with links to browse recipes and register or log in.
+
+   ![Home Page Placeholder](docs/images/home-page.jpg)
+
 2. **Recipe Pages**: Detailed views of recipes with options to filter, comment, and bookmark.
-3. **User Dashboard**: A personalized space for users to manage their recipes, bookmarks, and profile settings. Admin functionalities are also accessible here.
-4. **Admin Tools**: Integrated within the dashboard, allowing admins to manage all content directly.
+
+   ![Recipe Pages Placeholder](docs/images/recipes-page.jpg)
+
+3. **User Dashboard**: A personalized space for users to manage their recipes, bookmarks, and profile settings.
+
+   ![User Dashboard Placeholder](docs/images/dashboard-page.jpg)
 
 ### Navigation Structure
 
@@ -121,6 +129,7 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
 ### Visual Design
 
 - **Color Scheme**:
+
   - **Primary Color (`#0056b3`)**: Used for buttons, links, and other interactive elements, giving the platform a vibrant and cohesive look.
   - **Primary Hover Color (`#004494`)**: Applied to interactive elements during hover states to provide visual feedback.
   - **Text Color (`#333`)**: Ensures readability across the platform, with sufficient contrast against background elements.
@@ -131,9 +140,11 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
   - **Danger Button Color (`#dc3545`)**: Used for actions like deletions, signaling caution to the user.
 
 - **Typography**:
+
   - **Roboto**: A modern, sans-serif font that enhances readability and provides a clean, professional aesthetic.
 
 - **Imagery**:
+
   - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the default stock image provided by [iStock](https://www.istockphoto.com). High-quality, culturally relevant images enhance the visual appeal and engage users.
 
 - **Interactive Elements**:
@@ -183,36 +194,122 @@ To run AfroRecipeHub locally, ensure you have the following installed:
 ### Installation Steps
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/yourusername/afrorecipehub.git
    cd afrorecipehub
 
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   pip install -r requirements.txt
+
+   ```
+
+3. **Set up environment variables**:
+
+   ```bash
+   cp env.py.example env.py
+
+   ```
+
+4. **Run the application**:
+   ```bash
+   python app.py
+   ```
+
+## Database Structure
+
+AfroRecipeHub uses MongoDB to manage the following collections:
+
+AfroRecipeHub uses MongoDB to store user data, recipes, comments, and site statistics. The database schema is designed to maintain data consistency and integrity while facilitating efficient querying and filtering.
+
+### Collections and Fields
+
+#### 1. User Collection
+
+| Field           | Data Type | Description                       |
+| --------------- | --------- | --------------------------------- |
+| `_id`           | ObjectId  | Unique identifier for the user    |
+| `username`      | String    | Username of the user              |
+| `email`         | String    | User's email address              |
+| `password`      | String    | Hashed password                   |
+| `isAdmin`       | Boolean   | Indicates if the user is an admin |
+| `profile_image` | String    | Path to the user's profile image  |
+
+#### 2. Recipe Collection
+
+| Field          | Data Type | Description                                            |
+| -------------- | --------- | ------------------------------------------------------ |
+| `_id`          | ObjectId  | Unique identifier for the recipe                       |
+| `title`        | String    | Title of the recipe                                    |
+| `description`  | String    | Short description of the recipe                        |
+| `ingredients`  | Array     | List of ingredients                                    |
+| `instructions` | String    | Preparation instructions                               |
+| `category_id`  | ObjectId  | Foreign key linking to the category                    |
+| `created_by`   | ObjectId  | Foreign key linking to the user who created the recipe |
+| `image_path`   | String    | Path to the recipe image                               |
+
+#### 3. Categories Collection
+
+| Field  | Data Type | Description                                           |
+| ------ | --------- | ----------------------------------------------------- |
+| `_id`  | ObjectId  | Unique identifier for the category                    |
+| `name` | String    | Name of the category (e.g., "Main Course", "Dessert") |
+
+#### 4. Comments Collection
+
+| Field        | Data Type | Description                                          |
+| ------------ | --------- | ---------------------------------------------------- |
+| `_id`        | ObjectId  | Unique identifier for the comment                    |
+| `recipe_id`  | ObjectId  | Foreign key linking to the recipe                    |
+| `user_id`    | ObjectId  | Foreign key linking to the user who made the comment |
+| `comment`    | String    | The comment text                                     |
+| `created_at` | Date      | Timestamp of when the comment was made               |
+
+### One-to-Many Relationships
+
+- **User to Recipes**: A user can create multiple recipes.
+- **Recipe to Comments**: A recipe can have multiple comments associated with it.
+
+### One-to-One Relationships
+
+- **Recipe to Category**: Each recipe belongs to a single category.
+
 ## Usage
 
 ### User Registration and Authentication
+
 - Users can register by providing a username, email, and password.
 - Passwords are securely hashed using Flask-Bcrypt before being stored in the database.
 - After registering, users can log in to access personalized features like creating recipes, commenting, and bookmarking.
 
 ### Recipe Management
+
 - Logged-in users can create new recipes, including uploading images, adding ingredients, and writing step-by-step instructions.
 - Users can edit or delete their own recipes from their dashboard.
 - Recipes can be viewed by all users, with filtering options to help users find specific dishes.
 
 ### Commenting and Bookmarking
+
 - Users can leave comments on recipes to engage with other users.
 - Recipes can be bookmarked for easy access later from the user’s dashboard.
 
 ### Admin Controls
+
 - Admins have the ability to edit or delete any user-generated content, including recipes and comments, directly from the user interface.
 - Admins can manage user accounts to ensure the community remains positive and focused on its culinary mission.
 
 ## Security Features
 
 ### Environment Configuration
+
 - **Environment Variables:** All sensitive data, such as Flask configuration keys and MongoDB URIs, are stored in environment variables. This ensures that sensitive information is not hardcoded into the application and can be easily managed in different deployment environments.
 
 ### User Authentication and Authorization
+
 - **Registration:** Passwords are hashed using Flask-Bcrypt before storing in the database, ensuring that passwords are not stored in plain text. Unique usernames and emails are enforced to prevent duplicate accounts.
 
 - **Login:** User login is secured by checking the hashed password against the stored hash using Flask-Bcrypt. Session management is handled securely, with session cookies being set to HttpOnly to prevent JavaScript access.
@@ -237,8 +334,8 @@ To run AfroRecipeHub locally, ensure you have the following installed:
 
 ### Error Handling
 
-- **Graceful Error Handling:**  Errors are handled gracefully, with appropriate flash messages displayed to the user. Internal errors are logged for further investigation.
-Logging and Monitoring
+- **Graceful Error Handling:** Errors are handled gracefully, with appropriate flash messages displayed to the user. Internal errors are logged for further investigation.
+  Logging and Monitoring
 
 - **Operation Logging:** All critical operations are logged, and logs are monitored for suspicious activities. Logs do not contain sensitive information like passwords or API keys.
 
@@ -257,14 +354,17 @@ AfroRecipeHub is deployed on Heroku, a cloud platform that facilitates easy depl
 ### Deploying to Heroku
 
 1. **Create a Heroku App**:
+
    - Log in to your Heroku account.
    - Create a new app in the Heroku dashboard.
 
 2. **Set Up Environment Variables**:
+
    - In the Heroku dashboard, navigate to the "Settings" tab.
    - Under "Config Vars," add the same environment variables as defined in your `env.py` file.
 
 3. **Deploy the Application**:
+
    - Push the code to Heroku using the following commands:
      ```bash
      git add .
@@ -281,6 +381,7 @@ AfroRecipeHub is deployed on Heroku, a cloud platform that facilitates easy depl
 ## Credits and Acknowledgements
 
 ### Additional Inspirations and Online Resources
+
 In the development of AfroRecipeHub, Code Institutes robust materials were utilised, however, some of the following online resources and communities were instrumental:
 
 - **MongoDB Documentation:** The MongoDB documentation was critical for understanding how to structure the database, optimize queries, and handle data efficiently in a NoSQL environment.
@@ -294,6 +395,7 @@ In the development of AfroRecipeHub, Code Institutes robust materials were utili
 - **YouTube Tutorials:** Various YouTube channels, such as Corey Schafer, provided in-depth tutorials on Python, Flask, and web development best practices, helping to clarify complex concepts and inspire practical solutions.
 
 ### References
+
 - Sample recipe instructions were sourced from:
   - Nigerian Puff Puff: All Nigerian Recipes, Chef Lola’s Kitchen
   - Nigerian Chin Chin: African Bites, Precious Core
@@ -301,20 +403,24 @@ In the development of AfroRecipeHub, Code Institutes robust materials were utili
   - Nigerian Jollof Rice: BBC Food, Food52
 
 ### Images
+
 - All images used in the project were sourced from Pexels, except for the default stock image, which was sourced from iStock.
 
 ### Code Resources
+
 - Flask documentation for backend development.
 - Bootstrap for responsive front-end design.
 - Font Awesome for icons.
 
 ### Acknowledgements
+
 - Special thanks to the Code Institute for providing the educational resources and support to complete this project.
 - Thanks to my mentor for their invaluable feedback throughout the development process.
 
 ## Future Development
 
 While AfroRecipeHub is fully functional, there are several enhancements planned for future updates:
+
 - **Advanced Search Filters**: Implement search filters based on ingredients, preparation time, and dietary restrictions.
 - **User Rating System**: Allow users to rate recipes, providing additional feedback for recipe creators.
 - **Enhanced Gamification**: Expand the points-based system to include badges and leaderboards, encouraging more engagement.
@@ -322,4 +428,4 @@ While AfroRecipeHub is fully functional, there are several enhancements planned 
 
 ## Conclusion
 
-AfroRecipeHub serves as a platform that not only shares Afro-centric recipes but also builds a community around the rich and diverse culinary traditions of Africa and its diaspora. The combination of user-friendly design, robust features, and future enhancement plans positions AfroRecipeHub as a valuable resource for anyone interested in exploring Afro-centric cuisine.
+AfroRecipeHub serves as a platform that not only shares Afro-centric recipes but also builds a community around the rich and diverse culinary traditions of Africa and its diaspora.
