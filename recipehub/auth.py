@@ -97,35 +97,41 @@ def logout():
 @auth_bp.route('/change_username/<username>', methods=['GET', 'POST'])
 @login_required
 def change_username(username):
-    # Ensure the user is trying to change their own username
+    """
+    Allow authenticated users to change their username.
+    The new username is validated to ensure it is not
+    the same as the current username or already taken
+    by another user. Contextual feedback is provided
+    to guide the user.
+    """
     if username.lower() != current_user.username.lower():
         flash('You cannot change another user\'s username!', 'danger')
         return redirect(url_for('main.index'))
 
-    form = ChangeUsernameForm(username=current_user.username)
+    form = ChangeUsernameForm()
 
     if form.validate_on_submit():
         new_username = form.username.data.strip().lower()
 
-        # Check if the new username is the same as the current username
-        if new_username == current_user.username.lower():
-            flash('This is already your username. Please choose a different one.', 'warning')
+        # Validate the new username against the current user
+        try:
+            form.validate_username(form.username, current_user=current_user)
+        except ValidationError as e:
+            flash(str(e), 'warning')
             return render_template('change_username.html', form=form)
 
-        # Check if the new username already exists (case-insensitive check)
-        existing_user = mongo.db.users.find_one({"username": new_username})
-        
-        if existing_user:
-            flash('That username is taken (case-insensitive). Please choose a different one.', 'danger')
-            return render_template('change_username.html', form=form)
-        else:
-            # If the new username is valid and available, update it in the database
-            mongo.db.users.update_one(
-                {"_id": ObjectId(current_user.get_id())},
-                {"$set": {"username": form.username.data.strip()}}
-            )
-            flash('Your username has been updated!', 'success')
-            return redirect(url_for('main.dashboard', username=form.username.data.strip()))
+        # If no errors, proceed with updating the username
+        mongo.db.users.update_one(
+            {"_id": ObjectId(current_user.get_id())},
+            {"$set": {"username": new_username}}
+        )
+        flash('Your username has been updated!', 'success')
+        return redirect(url_for('main.dashboard', username=new_username))
+
+    elif form.errors:
+        for field, error_messages in form.errors.items():
+            for error in error_messages:
+                flash(error, 'danger')
 
     return render_template('change_username.html', form=form)
 
