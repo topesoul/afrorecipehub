@@ -10,6 +10,9 @@ from wtforms.validators import (
 from recipehub import mongo
 
 
+# =====================================
+# Registration Form
+# =====================================
 class RegistrationForm(FlaskForm):
     """
     Form for user registration. Includes username,
@@ -83,6 +86,9 @@ class RegistrationForm(FlaskForm):
             )
 
 
+# =====================================
+# Login Form
+# =====================================
 class LoginForm(FlaskForm):
     """
     Form for user login. Includes fields for username and password.
@@ -115,6 +121,9 @@ class LoginForm(FlaskForm):
     )
 
 
+# =====================================
+# Change Username Form
+# =====================================
 class ChangeUsernameForm(FlaskForm):
     """
     Form to allow users to change their username.
@@ -136,11 +145,20 @@ class ChangeUsernameForm(FlaskForm):
         }
     )
 
-    def validate_username(self, username):
+    def validate_username(self, username, current_user=None):
         """
-        Custom validator to check if the new username is already taken.
+        Custom validator to check if the new username is already taken
+        or if it's the same as the current username.
         """
         stripped_username = username.data.strip().lower()
+
+        # Check if the new username is the same as the current one
+        if current_user and stripped_username == current_user.username.lower():
+            raise ValidationError(
+                'This is already your username. Please choose a different one.'
+            )
+
+        # Check if the new username is taken by another user
         user = mongo.db.users.find_one({"username": stripped_username})
         if user:
             raise ValidationError(
@@ -149,6 +167,9 @@ class ChangeUsernameForm(FlaskForm):
             )
 
 
+# =====================================
+# Profile Update Form
+# =====================================
 class ProfileUpdateForm(FlaskForm):
     """
     Form to allow users to update their profile,
@@ -178,6 +199,9 @@ class ProfileUpdateForm(FlaskForm):
     )
 
 
+# =====================================
+# Recipe Form
+# =====================================
 class RecipeForm(FlaskForm):
     """
     Form for adding or editing a recipe.
@@ -259,6 +283,9 @@ class RecipeForm(FlaskForm):
             )
 
 
+# =====================================
+# Comment Form
+# =====================================
 class CommentForm(FlaskForm):
     """
     Form for adding comments to a recipe.
@@ -282,6 +309,9 @@ class CommentForm(FlaskForm):
     )
 
 
+# =====================================
+# Bookmark Form
+# =====================================
 class BookmarkForm(FlaskForm):
     """
     Form to handle bookmarking recipes.
