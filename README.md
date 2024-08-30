@@ -185,7 +185,8 @@ AfroRecipeHub offers a range of features designed to enhance user experience and
 
 - **User Registration, Authentication and Profile Management**: 
 
-![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png) ![Change Username](docs/images/change-username.png)  
+![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png) 
+![Change Username](docs/images/change-username.png)  
   Secure processes for creating accounts and logging in, deleting or changing profile settings like user profile image and username, with user data protection as a priority.
 - **Recipe Management**: ![User Dashboard - Recipe Management View](docs/images/recipe-management.png)  
   Full CRUD capabilities for users to manage their recipes, including the ability to upload images, add detailed instructions, and categorize their content.
