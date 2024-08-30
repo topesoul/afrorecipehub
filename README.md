@@ -20,15 +20,15 @@ This project was developed as part of the L5 Diploma in Web Application Developm
 - [Surface Plane](#surface-plane)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Setup Instructions](#setup-instructions)
-- [Usage](#usage)
+- [Setup and Deployment](#setup-and-deployment)
 - [Database Structure](#database-structure)
+- [Usage](#usage)
 - [Security Features](#security-features)
 - [API Integration](#api-integration)
 - [Testing](#testing)
-- [Deployment](#deployment)
 - [Credits and Acknowledgements](#credits-and-acknowledgements)
 - [Future Development](#future-development)
+- [Conclusion](#conclusion)
 
 ## Strategy Plane
 
@@ -93,22 +93,22 @@ Content within AfroRecipeHub is carefully structured to enhance usability and en
 
 ### Site Map
 
-1. **Home Page**: Introduction to AfroRecipeHub with links to browse recipes and register or log in.
+1. **Home Page**: Introduction to AfroRecipeHub with links to browse recipes and register or log in. It includes a reference to rewards or gamification features and community growth statistics embedded into the landing page to maintain a strong appeal. 
 
-   ![Home Page Placeholder](docs/images/home-page.jpg)
+   ![Home Page](docs/images/home-page.jpg)
 
 2. **Recipe Pages**: Detailed views of recipes with options to filter, comment, and bookmark.
 
-   ![Recipe Pages Placeholder](docs/images/recipes-page.jpg)
+   ![Recipe Pages](docs/images/recipes-page.jpg)
 
 3. **User Dashboard**: A personalized space for users to manage their recipes, bookmarks, and profile settings.
 
-   ![User Dashboard Placeholder](docs/images/dashboard-page.jpg)
+   ![User Dashboard](docs/images/registered-user-dashboard.jpg)
 
 ### Navigation Structure
 
 - **Top Navigation Bar**: Provides quick access to the home page, recipes, user dashboard (if logged in), and admin functionalities (if applicable).
-- **Footer**: Contains links to social media, contact information, and other relevant resources.
+- **Footer**: Contains app logo and developer credits.
 
 ## Skeleton Plane
 
@@ -118,15 +118,24 @@ The skeleton of AfroRecipeHub is designed with usability in mind. The layout is 
 
 Wireframes were created during the design phase to visualize the layout and flow of the platform. These wireframes guided the development process, ensuring that the final product is intuitive and user-friendly.
 
-- **Home Page Wireframe**: Layout for the main landing page, including key navigation links and featured recipes.
-- **Recipe Page Wireframe**: Structure for displaying recipes, including ingredients, instructions, and comments.
-- **Dashboard Wireframe**: Design for the user dashboard, where users can manage their content and access admin tools if applicable.
+- **Home Page Wireframe**: Layout for the main landing page, including key navigation links and featured recipes.  
+  [View Home Page Wireframe](docs/wireframes/home-page-wireframe.pdf)
+
+- **Recipe Page Wireframe**: Structure for displaying recipes, including ingredients, instructions, and comments.  
+  [View Recipe Page Wireframe](docs/wireframes/recipe-page-wireframe.pdf)
+
+- **Dashboard Wireframe**: Design for the user dashboard, where users can manage their content and access admin tools if applicable.  
+  [View Dashboard Wireframe](docs/wireframes/dashboard-wireframe.pdf)
 
 ## Surface Plane
 
 The visual design of AfroRecipeHub reflects its cultural roots while maintaining a modern, professional aesthetic. The platform's design uses color, typography, and imagery to create an inviting and engaging user experience.
 
 ### Visual Design
+
+- **Logo**:
+  ![AfroRecipeHub Logo](recipehub/static/images/logo-one.png)
+  - The AfroRecipeHub logo is a central element of the platform's branding, representing the fusion of tradition and modernity that the platform embodies. The logo is prominently displayed on the navigation bar and footer, ensuring brand consistency throughout the user journey. 
 
 - **Color Scheme**:
 
@@ -145,7 +154,8 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
 
 - **Imagery**:
 
-  - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the default stock image provided by [iStock](https://www.istockphoto.com). High-quality, culturally relevant images enhance the visual appeal and engage users.
+  - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the following exceptions. The default stock image was sourced from [iStock](https://www.istockphoto.com). The default profile image was obtained from [Cliparts.co](https://cliparts.co) and the AfroRecipeHub Logo designed using [Microsoft Designer](https://designer.microsoft.com). 
+  High-quality, culturally relevant images have been sourced to enhance the visual appeal and engage users.
 
 - **Interactive Elements**:
   - Buttons, forms, and other interactive elements are designed with accessibility in mind, providing clear feedback and ensuring ease of use across all devices.
@@ -158,13 +168,20 @@ To give users a dynamic and engaging experience, special attention was given to 
 
 AfroRecipeHub offers a range of features designed to enhance user experience and encourage community participation:
 
-- **User Registration and Authentication**: Secure processes for creating accounts and logging in, with user data protection as a priority.
-- **Recipe Management**: Full CRUD capabilities for users to manage their recipes, including the ability to upload images, add detailed instructions, and categorize their content.
-- **Commenting System**: Users can comment on recipes, with comments moderated by admins to maintain a positive community atmosphere.
-- **Bookmarking**: Users can bookmark their favorite recipes for easy access from their personal dashboard.
-- **Gamification**: A points system rewards users for contributing content, such as creating recipes or leaving comments, with points displayed on their profile.
-- **Admin Controls**: Integrated within the user interface, allowing admins to manage all user-generated content, including the ability to edit or delete recipes and comments.
-- **Responsive Design**: Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
+- **User Registration, Authentication and Profile Management**: ![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png)  
+  Secure processes for creating accounts and logging in, deleting or changing profile settings like user profile image and username, with user data protection as a priority.
+- **Recipe Management**: ![User Dashboard - Recipe Management View](docs/images/recipe-management.png)  
+  Full CRUD capabilities for users to manage their recipes, including the ability to upload images, add detailed instructions, and categorize their content.
+- **Commenting System**: ![User Comments](docs/images/user-comments.png)  
+  Users can comment on recipes, with comments moderated by admins to maintain a positive community atmosphere.
+- **Bookmarking**: ![Bookmark Feature](docs/images/bookmark-feature.png) ![Access Bookmarks](docs/images/access-bookmarks.png) ![View Saved Bookmarks](docs/images/view-bookmark.png)
+  Users can bookmark their favorite recipes for easy access from their personal dashboard.
+- **Gamification**: ![User Points Reward](docs/images/user-points-summary.png)  
+  A points system rewards users for contributing content, such as creating recipes or leaving comments, with points displayed on their profile.
+- **Admin Controls**: ![Admin View All User Recipes](docs/images/admin-view-all-recipes.png) ![Admin View User Recipes](docs/images/admin-view-user-recipe.png)  
+  Integrated within the user interface, allowing admins to manage all user-generated content, including the ability to edit or delete recipes and comments.
+- **Responsive Design**: ![iPhone 14 view](docs/images/iphone-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
+  Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
 
 ## Technologies Used
 
@@ -177,10 +194,11 @@ AfroRecipeHub is built using a variety of modern web technologies:
 - **Bootstrap**: A responsive front-end framework that helps ensure the platform looks great on all devices.
 - **Jinja2**: A templating engine for Python, used to generate dynamic HTML content.
 - **Font Awesome**: Supplies icons used throughout the platform to enhance usability and visual appeal.
-- **Google Fonts**: The Roboto font is used for all textual content, providing a clean and modern look.
 - **Heroku**: A cloud platform used to deploy and host the AfroRecipeHub web application.
 
-## Setup Instructions
+## Setup and Deployment
+
+This section guides you through setting up the AfroRecipeHub project locally and deploying it to Heroku.
 
 ### Prerequisites
 
@@ -201,30 +219,82 @@ To run AfroRecipeHub locally, ensure you have the following installed:
 
    ```
 
-2. **Install dependencies**:
+2. **Create a Virtual Environment**:
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+
+   ```
+
+3. **Install Dependencies**:
 
    ```bash
    pip install -r requirements.txt
 
    ```
 
-3. **Set up environment variables**:
+4. **Set Up Environment Variables**:  
+   Create a file named env.py in the root directory and add the following variables:
 
    ```bash
-   cp env.py.example env.py
+   import os
 
+   os.environ["IP"] = "0.0.0.0"
+   os.environ["PORT"] = "5000"
+   os.environ["SECRET_KEY"] = Insert your secret key here
+   os.environ["MONGO_URI"] = Insert your mongodb url here
+   os.environ["MONGO_DBNAME"] = Insert your mongodb database name here
    ```
 
-4. **Run the application**:
-   ```bash
-   python app.py
-   ```
+   **Please do not share these sensitive details for security reasons!**
+
+5. **Connect to MongoDB**:
+
+- If using a local instance of MongoDB, ensure MongoDB is running on your machine.
+- If using a cloud instance like MongoDB Atlas, ensure your connection string (MONGO_URI) is correctly configured in the env.py file.
+  Run the Application:
+
+```
+python app.py
+Access the application at http://localhost:5000.
+```
+
+### Deploying to Heroku
+
+**1.** **Create a Heroku App:**
+
+- Log in to your Heroku account.
+- Create a new app in the Heroku dashboard.
+
+**2.** **Set Up Environment Variables:**
+
+- In the Heroku dashboard, navigate to the "Settings" tab.
+- Under "Config Vars," add the same environment variables as defined in your env.py file.
+
+**3.** **Deploy the Application:**
+
+- Push the code to Heroku using the following commands:
+
+  ```
+  git add .
+  git commit -m "Deploy to Heroku"
+  git push heroku main
+  ```
+
+  **4.** **Open the Application:**
+
+- Once the deployment is successful, you can open the app via the Heroku dashboard or by running:
+  ```
+  heroku open
+  ```
+  **IMPORTANT** _To successfully deploy your project to Heroku, you must remember to include requirements.txt with appropriate dependencies and Procfile file setup correctly._
 
 ## Database Structure
 
 AfroRecipeHub uses MongoDB to manage the following collections:
 
-AfroRecipeHub uses MongoDB to store user data, recipes, comments, and site statistics. The database schema is designed to maintain data consistency and integrity while facilitating efficient querying and filtering.
+AfroRecipeHub uses MongoDB to store user data, recipes, comments etc. The database schema is designed to maintain data consistency and integrity while facilitating efficient querying and filtering.
 
 ### Collections and Fields
 
@@ -345,38 +415,12 @@ AfroRecipeHub features API endpoints designed to enhance the user experience. On
 
 ## Testing
 
-Testing is a critical part of the development process. Detailed testing procedures, validation, known issues, and resolutions are documented in the `TESTING.md` file. Please refer to that file for comprehensive testing information.
+Testing is a critical part of the development process. Detailed testing procedures, validation, known issues, and resolutions are documented in the `TESTING.md` file. 
 
-## Deployment
+Please refer to [Testing Documentation](docs/testing/TESTING.md) for comprehensive testing information.
 
-AfroRecipeHub is deployed on Heroku, a cloud platform that facilitates easy deployment and scaling of web applications.
-
-### Deploying to Heroku
-
-1. **Create a Heroku App**:
-
-   - Log in to your Heroku account.
-   - Create a new app in the Heroku dashboard.
-
-2. **Set Up Environment Variables**:
-
-   - In the Heroku dashboard, navigate to the "Settings" tab.
-   - Under "Config Vars," add the same environment variables as defined in your `env.py` file.
-
-3. **Deploy the Application**:
-
-   - Push the code to Heroku using the following commands:
-     ```bash
-     git add .
-     git commit -m "Deploy to Heroku"
-     git push heroku main
-     ```
-
-4. **Open the Application**:
-   - Once the deployment is successful, you can open the app via the Heroku dashboard or by running:
-     ```bash
-     heroku open
-     ```
+Comprehensive testing has been conducted for AfroRecipeHub, covering various user scenarios and ensuring the platform’s robustness across different devices and browsers. 
+#### [User Testing Stories](docs/testing/TESTING.md#user-testing-stories)
 
 ## Credits and Acknowledgements
 
