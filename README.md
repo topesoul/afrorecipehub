@@ -93,7 +93,7 @@ Content within AfroRecipeHub is carefully structured to enhance usability and en
 
 ### Site Map
 
-1. **Home Page**: Introduction to AfroRecipeHub with links to browse recipes and register or log in. It includes a reference to rewards or gamification features and community growth statistics embedded into the landing page to maintain a strong appeal. 
+1. **Home Page**: Introduction to AfroRecipeHub with links to browse recipes and register or log in. It includes a reference to rewards or gamification features and community growth statistics embedded into the landing page to maintain a strong appeal.
 
    ![Home Page](docs/images/home-page.jpg)
 
@@ -148,7 +148,8 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
 
 - **Logo**:
   ![AfroRecipeHub Logo](recipehub/static/images/logo-one.png)
-  - The AfroRecipeHub logo is a central element of the platform's branding, representing the fusion of tradition and modernity that the platform embodies. The logo is prominently displayed on the navigation bar and footer, ensuring brand consistency throughout the user journey. 
+
+  - The AfroRecipeHub logo is a central element of the platform's branding, representing the fusion of tradition and modernity that the platform embodies. The logo is prominently displayed on the navigation bar and footer, ensuring brand consistency throughout the user journey.
 
 - **Color Scheme**:
 
@@ -167,9 +168,9 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
 
 - **Imagery**:
 
-  - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the following exceptions. The default stock image was sourced from [iStock](https://www.istockphoto.com). The default profile image was obtained from [Cliparts.co](https://cliparts.co) and the AfroRecipeHub Logo designed using [Microsoft Designer](https://designer.microsoft.com). 
-  High-quality, culturally relevant images have been sourced to enhance the visual appeal and engage users.
-  The  wireframe diagrams were created using the Samsung Galaxy Tab S9 Ultra - Notebook App and Pen.
+  - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the following exceptions. The default stock image was sourced from [iStock](https://www.istockphoto.com). The default profile image was obtained from [Cliparts.co](https://cliparts.co) and the AfroRecipeHub Logo designed using [Microsoft Designer](https://designer.microsoft.com).
+    High-quality, culturally relevant images have been sourced to enhance the visual appeal and engage users.
+    The wireframe diagrams were created using the Samsung Galaxy Tab S9 Ultra - Notebook App and Pen.
 
 - **Interactive Elements**:
   - Buttons, forms, and other interactive elements are designed with accessibility in mind, providing clear feedback and ensuring ease of use across all devices.
@@ -194,9 +195,9 @@ AfroRecipeHub offers a range of features designed to enhance user experience and
   A points system rewards users for contributing content, such as creating recipes or leaving comments, with points displayed on their profile.
 - **Admin Controls**: ![Admin View All User Recipes](docs/images/admin-view-all-recipes.png) ![Admin View User Recipes](docs/images/admin-view-user-recipe.png)  
   Integrated within the user interface, allowing admins to manage all user-generated content, including the ability to edit or delete recipes and comments.
-- **Responsive Design**:        
-![iPhone 14 view](docs/images/iphone-fourteen-pro-max-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
-  Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
+- **Responsive Design**:  
+  ![iPhone 14 view](docs/images/iphone-fourteen-pro-max-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
+   Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
 
 ## Technologies Used
 
@@ -430,11 +431,12 @@ AfroRecipeHub features API endpoints designed to enhance the user experience. On
 
 ## Testing
 
-Testing is a critical part of the development process. Detailed testing procedures, validation, known issues, and resolutions are documented in the `TESTING.md` file. 
+Testing is a critical part of the development process. Detailed testing procedures, validation, known issues, and resolutions are documented in the `TESTING.md` file.
 
 Please refer to [Testing Documentation](docs/testing/TESTING.md) for comprehensive testing information.
 
-Comprehensive testing has been conducted for AfroRecipeHub, covering various user scenarios and ensuring the platform’s robustness across different devices and browsers. 
+Comprehensive testing has been conducted for AfroRecipeHub, covering various user scenarios and ensuring the platform’s robustness across different devices and browsers.
+
 #### [User Testing Stories](docs/testing/TESTING.md#user-testing-stories)
 
 ## Credits and Acknowledgements
