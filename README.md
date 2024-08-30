@@ -188,17 +188,28 @@ AfroRecipeHub offers a range of features designed to enhance user experience and
 ![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png) 
 ![Change Username](docs/images/change-username.png)  
   Secure processes for creating accounts and logging in, deleting or changing profile settings like user profile image and username, with user data protection as a priority.
-- **Recipe Management**: ![User Dashboard - Recipe Management View](docs/images/recipe-management.png)  
+- **Recipe Management**: 
+
+![User Dashboard - Recipe Management View](docs/images/recipe-management.png)  
   Full CRUD capabilities for users to manage their recipes, including the ability to upload images, add detailed instructions, and categorize their content.
-- **Commenting System**: ![User Comments](docs/images/user-comments.png)  
+- **Commenting System**: 
+
+![User Comments](docs/images/user-comments.png)  
   Users can comment on recipes, with comments moderated by admins to maintain a positive community atmosphere.
-- **Bookmarking**: ![Bookmark Feature](docs/images/bookmark-feature.png) ![Remove Bookmark](docs/images/unbookmark-feature.png) ![Access Bookmarks](docs/images/access-bookmarks.png) ![View Saved Bookmarks](docs/images/view-bookmark.png)
+- **Bookmarking**: 
+
+![Bookmark Feature](docs/images/bookmark-feature.png) ![Remove Bookmark](docs/images/unbookmark-feature.png) ![Access Bookmarks](docs/images/access-bookmarks.png) ![View Saved Bookmarks](docs/images/view-bookmark.png)
   Users can bookmark their favorite recipes for easy access from their personal dashboard.
-- **Gamification**: ![User Points Reward](docs/images/user-points-summary.png)  
+- **Gamification**: 
+
+![User Points Reward](docs/images/user-points-summary.png)  
   A points system rewards users for contributing content, such as creating recipes or leaving comments, with points displayed on their profile.
-- **Admin Controls**: ![Admin View All User Recipes](docs/images/admin-view-all-recipes.png) ![Admin View User Recipes](docs/images/admin-view-user-recipe.png)  
+- **Admin Controls**: 
+
+![Admin View All User Recipes](docs/images/admin-view-all-recipes.png) ![Admin View User Recipes](docs/images/admin-view-user-recipe.png)  
   Integrated within the user interface, allowing admins to manage all user-generated content, including the ability to edit or delete recipes and comments.
 - **Responsive Design**:  
+  
   ![iPhone 14 view](docs/images/iphone-fourteen-pro-max-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
    Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
 
