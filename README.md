@@ -116,16 +116,29 @@ The skeleton of AfroRecipeHub is designed with usability in mind. The layout is 
 
 ### Wireframes
 
-Wireframes were created during the design phase to visualize the layout and flow of the platform. These wireframes guided the development process, ensuring that the final product is intuitive and user-friendly.
+Wireframes were an essential part of the design process for AfroRecipeHub, helping to visualize the layout and structure of the platform. These wireframes were used to guide the development, ensuring that the final product was intuitive, user-friendly, and aligned with the project goals.
 
-- **Home Page Wireframe**: Layout for the main landing page, including key navigation links and featured recipes.  
+Each wireframe represents a key page or feature of the platform:
+
+- **Home Page Wireframe**: This wireframe outlines the layout for the main landing page, including the navigation bar, hero section with a call-to-action, and featured recipes. The design focuses on providing a clear entry point for users to explore the platform and engage with the content.  
   [View Home Page Wireframe](docs/wireframes/home-page-wireframe.pdf)
 
-- **Recipe Page Wireframe**: Structure for displaying recipes, including ingredients, instructions, and comments.  
+- **Recipe Page Wireframe**: The recipe page wireframe illustrates the structure for displaying recipes. This includes sections for recipe images, ingredients, preparation instructions, and user comments. The design prioritizes easy navigation and readability, ensuring that users can quickly find and follow recipes.  
   [View Recipe Page Wireframe](docs/wireframes/recipe-page-wireframe.pdf)
 
-- **Dashboard Wireframe**: Design for the user dashboard, where users can manage their content and access admin tools if applicable.  
-  [View Dashboard Wireframe](docs/wireframes/dashboard-wireframe.pdf)
+- **Recipe Detail Wireframe**: This wireframe shows the detailed view of a single recipe. It includes the recipe title, image, detailed instructions, and a section for user comments. The layout is designed to keep users focused on the recipe content while allowing them to interact with the community by leaving comments.  
+  [View Recipe Detail Wireframe](docs/wireframes/recipe-detail-wireframe.pdf)
+
+- **User Dashboard Wireframe**: The user dashboard wireframe illustrates how users can manage their content. It includes sections for viewing and editing personal recipes, accessing bookmarked recipes, and updating profile settings. The dashboard is designed to be a central hub for user activity on the platform.  
+  [View Dashboard Wireframe](docs/wireframes/user-dashboard-wireframe.pdf)
+
+- **User Registration Wireframe**: This wireframe displays the layout for the user registration page. It includes fields for entering user credentials, such as username, email, and password, along with validation messages. The design emphasizes simplicity and ease of use, guiding new users through the registration process.  
+  [View User Registration Wireframe](docs/wireframes/user-registration-wireframe.pdf)
+
+- **User Login Wireframe**: The login wireframe presents the layout for the user login page, with fields for email and password. It also includes links for password recovery and registration. The design is straightforward, ensuring that users can quickly access their accounts.  
+  [View User Login Wireframe](docs/wireframes/user-login-wireframe.pdf)
+
+These wireframes served as a blueprint throughout the development phase, ensuring that each page and feature was aligned with the project's objectives and user needs.
 
 ## Surface Plane
 
@@ -156,6 +169,7 @@ The visual design of AfroRecipeHub reflects its cultural roots while maintaining
 
   - **Images**: All images used in the project are sourced from [Pexels](https://pexels.com), with the following exceptions. The default stock image was sourced from [iStock](https://www.istockphoto.com). The default profile image was obtained from [Cliparts.co](https://cliparts.co) and the AfroRecipeHub Logo designed using [Microsoft Designer](https://designer.microsoft.com). 
   High-quality, culturally relevant images have been sourced to enhance the visual appeal and engage users.
+  The  wireframe diagrams were created using the Samsung Galaxy Tab S9 Ultra - Notebook App and Pen.
 
 - **Interactive Elements**:
   - Buttons, forms, and other interactive elements are designed with accessibility in mind, providing clear feedback and ensuring ease of use across all devices.
@@ -168,19 +182,20 @@ To give users a dynamic and engaging experience, special attention was given to 
 
 AfroRecipeHub offers a range of features designed to enhance user experience and encourage community participation:
 
-- **User Registration, Authentication and Profile Management**: ![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png)  
+- **User Registration, Authentication and Profile Management**: ![User Registration](docs/images/user-registration.png) ![User Login](docs/images/user-login.png) ![User Authentication](docs/images/user-authentication.png) ![User Profile management](docs/images/user-profile-management.png) ![Change Username](docs/images/change-username.png)  
   Secure processes for creating accounts and logging in, deleting or changing profile settings like user profile image and username, with user data protection as a priority.
 - **Recipe Management**: ![User Dashboard - Recipe Management View](docs/images/recipe-management.png)  
   Full CRUD capabilities for users to manage their recipes, including the ability to upload images, add detailed instructions, and categorize their content.
 - **Commenting System**: ![User Comments](docs/images/user-comments.png)  
   Users can comment on recipes, with comments moderated by admins to maintain a positive community atmosphere.
-- **Bookmarking**: ![Bookmark Feature](docs/images/bookmark-feature.png) ![Access Bookmarks](docs/images/access-bookmarks.png) ![View Saved Bookmarks](docs/images/view-bookmark.png)
+- **Bookmarking**: ![Bookmark Feature](docs/images/bookmark-feature.png) ![Remove Bookmark](docs/images/unbookmark-feature.png) ![Access Bookmarks](docs/images/access-bookmarks.png) ![View Saved Bookmarks](docs/images/view-bookmark.png)
   Users can bookmark their favorite recipes for easy access from their personal dashboard.
 - **Gamification**: ![User Points Reward](docs/images/user-points-summary.png)  
   A points system rewards users for contributing content, such as creating recipes or leaving comments, with points displayed on their profile.
 - **Admin Controls**: ![Admin View All User Recipes](docs/images/admin-view-all-recipes.png) ![Admin View User Recipes](docs/images/admin-view-user-recipe.png)  
   Integrated within the user interface, allowing admins to manage all user-generated content, including the ability to edit or delete recipes and comments.
-- **Responsive Design**: ![iPhone 14 view](docs/images/iphone-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
+- **Responsive Design**:        
+![iPhone 14 view](docs/images/iphone-fourteen-pro-max-responsive.png) ![Zfold view](docs/images/zfold-responsive.png) ![Samsung view](docs/images/samsung-mobile-responsive.png) ![iPhone SE view](docs/images/iphone-se-responsive.png)  
   Ensures that AfroRecipeHub is fully functional and visually appealing on all devices, from desktops to mobile phones.
 
 ## Technologies Used
